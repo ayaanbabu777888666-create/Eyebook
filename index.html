@@ -561,13 +561,6 @@ import {
   getStorage, ref, uploadBytes, getDownloadURL
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 
-/*
- IMPORTANT:
- Use the complete configuration copied from:
- Firebase Console > Project Settings > Your apps > Web app.
-
- All fields must belong to the SAME project.
-*/
 const firebaseConfig = {
   apiKey: "AIzaSyARJlmwpKVoEKmMLTy0ddDnE2lMQEKZKts",
   authDomain: "eyebook-7885f-78d46.firebaseapp.com",
@@ -578,13 +571,6 @@ const firebaseConfig = {
   measurementId: "G-JC2H7X4DB9"
 };
 
-/*
- Replace this with the URL of your real, built APK.
- Example:
- https://your-domain.example/EyeBook.apk
-
- Do not leave a fake URL and expect an APK to download.
-*/
 const APK_DOWNLOAD_URL = "";
 
 const $ = id => document.getElementById(id);
@@ -650,7 +636,7 @@ function firebaseError(error) {
 
 function ensureFirebase() {
   if (authReady && auth && db && storage) return true;
-  errorText("authError", "Firebase is not configured. Check the configuration at the end of this code.");
+  errorText("authError", "Firebase is not configured.");
   return false;
 }
 
@@ -865,7 +851,7 @@ $("createProfileButton").onclick = async () => {
   }
 
   if (!/^[a-z0-9_.]{3,24}$/.test(username)) {
-    errorText("setupError", "Username must be 3–24 characters using letters, numbers, dots or underscores.");
+    errorText("setupError", "Username must be 3–24 characters.");
     return;
   }
 
@@ -1203,7 +1189,7 @@ function startFeed() {
   });
 }
 
-/* Stories: text-only, expire after 24 hours */
+/* Stories */
 $("publishStoryButton").onclick = async () => {
   errorText("storyError");
 
@@ -1343,16 +1329,14 @@ $("searchButton").onclick = async () => {
 /* Earnings and APK information */
 $("paymentInfoButton").onclick = () => {
   $("paymentInfoText").textContent =
-    "Real earnings require an approved ad provider and verified reports. " +
-    "Never treat a browser-only balance as real money. Actual payments " +
-    "follow the provider's payment rules.";
+    "Real earnings require an approved ad provider and verified reports.";
 };
 
 $("apkInfoButton").onclick = () => {
   $("apkInfoText").textContent =
     APK_DOWNLOAD_URL
-      ? "APK link configured. Use Download APK to download your app."
-      : "No APK file is configured yet. First build an Android APK, host the file, and set APK_DOWNLOAD_URL in this code.";
+      ? "APK link configured."
+      : "No APK file is configured yet.";
 };
 
 if (APK_DOWNLOAD_URL) {
@@ -1385,97 +1369,74 @@ $("logoutButton").onclick = async () => {
 
 /* Firebase initialization */
 try {
-  const configIncomplete =
-    !firebaseConfig.apiKey ||
-    firebaseConfig.apiKey === "const firebaseConfig = {
-  apiKey: "AIzaSyARJlmwpKVoEKmMLTy0ddDnE2lMQEKZKts",
-  authDomain: "eyebook-7885f-78d46.firebaseapp.com",
-  projectId: "eyebook-7885f-78d46",
-  storageBucket: "eyebook-7885f-78d46.firebasestorage.app",
-  messagingSenderId: "1059176010742",
-  appId: "1:1059176010742:web:b24a7a9dafa2f8962eadd7",
-  measurementId: "G-JC2H7X4DB9"
-};
-Are you using NPM and a bundler like webpack " ||
-    firebaseConfig.projectId.includes("YOUR_");
+  const app = initializeApp(firebaseConfig);
 
-  if (configIncomplete) {
-    showMainScreen("auth");
-    showAuthScreen("startScreen");
-    errorText(
-      "authError",
-      "Setup required: paste your exact Firebase Web Configuration into this code."
-    );
-  } else {
-    const app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  storage = getStorage(app);
+  authReady = true;
 
-    auth = getAuth(app);
-    db = getFirestore(app);
-    storage = getStorage(app);
-    authReady = true;
+  onAuthStateChanged(auth, async user => {
+    const operation = ++authOperation;
+    currentUser = user;
 
-    onAuthStateChanged(auth, async user => {
-      const operation = ++authOperation;
-      currentUser = user;
+    if (!user) {
+      profile = null;
 
-      if (!user) {
+      if (feedUnsubscribe) {
+        feedUnsubscribe();
+        feedUnsubscribe = null;
+      }
+
+      if (storiesUnsubscribe) {
+        storiesUnsubscribe();
+        storiesUnsubscribe = null;
+      }
+
+      showMainScreen("auth");
+      showAuthScreen("startScreen");
+      return;
+    }
+
+    try {
+      const snapshot = await getDoc(doc(db, "users", user.uid));
+
+      if (operation !== authOperation) return;
+
+      if (
+        !snapshot.exists() ||
+        !snapshot.data().name ||
+        !snapshot.data().username
+      ) {
         profile = null;
 
-        if (feedUnsubscribe) {
-          feedUnsubscribe();
-          feedUnsubscribe = null;
-        }
+        $("setupTitle").textContent = "Create Your EyeBook ID";
+        $("createProfileButton").textContent = "Create My ID";
+        $("cancelEditButton").classList.add("hidden");
 
-        if (storiesUnsubscribe) {
-          storiesUnsubscribe();
-          storiesUnsubscribe = null;
-        }
+        $("fullName").value =
+          user.displayName || user.email?.split("@")[0] || "";
 
-        showMainScreen("auth");
-        showAuthScreen("startScreen");
+        $("username").value = "";
+        $("bio").value = "";
+
+        errorText("setupError");
+        showMainScreen("setup");
         return;
       }
 
-      try {
-        const snapshot = await getDoc(doc(db, "users", user.uid));
+      profile = snapshot.data();
+      await openApp();
+    } catch (error) {
+      if (operation !== authOperation) return;
 
-        if (operation !== authOperation) return;
-
-        if (
-          !snapshot.exists() ||
-          !snapshot.data().name ||
-          !snapshot.data().username
-        ) {
-          profile = null;
-
-          $("setupTitle").textContent = "Create Your EyeBook ID";
-          $("createProfileButton").textContent = "Create My ID";
-          $("cancelEditButton").classList.add("hidden");
-
-          $("fullName").value =
-            user.displayName || user.email?.split("@")[0] || "";
-
-          $("username").value = "";
-          $("bio").value = "";
-
-          errorText("setupError");
-          showMainScreen("setup");
-          return;
-        }
-
-        profile = snapshot.data();
-        await openApp();
-      } catch (error) {
-        if (operation !== authOperation) return;
-
-        showMainScreen("auth");
-        errorText(
-          "authError",
-          "Unable to load your profile: " + firebaseError(error)
-        );
-      }
-    });
-  }
+      showMainScreen("auth");
+      errorText(
+        "authError",
+        "Unable to load your profile: " + firebaseError(error)
+      );
+    }
+  });
 } catch (error) {
   console.error("EyeBook Firebase initialization error:", error);
 
