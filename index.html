@@ -8,7 +8,7 @@
 
 <title>EyeBook — Connect Your World</title>
 
-<!-- PWA Manifest for Standalone Native App Feel -->
+<!-- PWA Manifest -->
 <link rel="manifest" href='data:application/manifest+json,{
   "name": "EyeBook",
   "short_name": "EyeBook",
@@ -56,7 +56,7 @@ button{cursor:pointer}
 button:disabled{opacity:.55;cursor:wait}
 .hidden{display:none!important}
 
-/* Header UI matching Instagram */
+/* Header UI */
 .header{
   position:sticky;
   top:0;
@@ -111,7 +111,6 @@ button:disabled{opacity:.55;cursor:wait}
 }
 .icon-btn svg{width:24px;height:24px;fill:currentColor}
 
-/* Hide Download Button inside Installed PWA App */
 @media all and (display-mode: standalone) {
   #apkDownloadBtn { display: none !important; }
 }
@@ -185,7 +184,7 @@ input,textarea,select{
   color:white;
 }
 
-/* Dynamic Instagram Stories Bar */
+/* Stories Bar */
 .stories-container{
   display:flex;
   gap:14px;
@@ -263,7 +262,35 @@ input,textarea,select{
   width:100%;
 }
 
-/* Instagram Style 5 Buttons Nav Bar */
+/* Highlights Bar */
+.highlights-bar{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:10px 0;
+  scrollbar-width:none;
+}
+.highlights-bar::-webkit-scrollbar{display:none}
+.highlight-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  font-size:11px;
+  gap:4px;
+}
+.highlight-circle{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:1px solid var(--border);
+  background:#123d29;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+.highlight-circle img{width:100%;height:100%;object-fit:cover}
+
+/* Navigation Bar */
 .nav{
   position:fixed;
   bottom:0;
@@ -330,17 +357,7 @@ input,textarea,select{
 }
 
 .post-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.post-head img, .post-head .avatar-sm{width:36px;height:36px;border-radius:50%;object-fit:cover}
-
-.post-actions{
-  display:flex;
-  gap:18px;
-  margin-top:10px;
-  font-size:14px;
-  font-weight:bold;
-  color:var(--bright);
-}
-.post-actions span{cursor:pointer}
+.post-head img{width:36px;height:36px;border-radius:50%;object-fit:cover}
 
 .error{color:var(--danger);font-size:12px;margin-top:8px}
 
@@ -393,6 +410,16 @@ input,textarea,select{
 }
 .stat-num{font-size:18px;font-weight:900;color:var(--text)}
 .stat-label{font-size:12px;color:var(--muted)}
+
+.settings-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+  font-size:14px;
+}
 </style>
 </head>
 
@@ -403,6 +430,7 @@ input,textarea,select{
     <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
   </button>
   <div class="brand" id="brandHome">
+    <!-- Eye Logo -->
     <span class="logo">
       <svg viewBox="0 0 100 70" aria-label="EyeBook Logo">
         <defs>
@@ -424,8 +452,8 @@ input,textarea,select{
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
       Download
     </button>
-    <button class="icon-btn" id="openSettingsBtn" title="Notifications / Settings">
-      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    <button class="icon-btn" id="openSettingsBtn" title="Settings and activity">
+      <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
     </button>
   </div>
 </header>
@@ -446,7 +474,7 @@ input,textarea,select{
         <button class="btn btn-secondary" id="googleButton">Continue with Google</button>
       </div>
 
-      <!-- Mobile Login with Continue button -->
+      <!-- Mobile Login with Continue Button -->
       <div id="phoneScreen" class="hidden">
         <h3>Mobile Login</h3>
         <label>Indian Mobile Number</label>
@@ -538,7 +566,7 @@ input,textarea,select{
       </div>
     </div>
 
-    <!-- Profile Tab Matching Screenshot -->
+    <!-- Profile Tab with Real Counts (0 if none) -->
     <div id="profileTab" class="tab-content hidden">
       <div class="card">
         <div style="display:flex;align-items:center;gap:15px;margin-bottom:12px;">
@@ -546,9 +574,9 @@ input,textarea,select{
           <div style="flex:1;">
             <h2 id="profileUsername" style="margin:0;font-size:16px;">@username</h2>
             <div class="profile-stats-row" style="margin:8px 0 0;justify-content:space-between;">
-              <div><span class="stat-num">41</span><div class="stat-label">posts</div></div>
-              <div><span class="stat-num">1,956</span><div class="stat-label">followers</div></div>
-              <div><span class="stat-num">423</span><div class="stat-label">following</div></div>
+              <div><span class="stat-num" id="statPosts">0</span><div class="stat-label">posts</div></div>
+              <div><span class="stat-num" id="statFollowers">0</span><div class="stat-label">followers</div></div>
+              <div><span class="stat-num" id="statFollowing">0</span><div class="stat-label">following</div></div>
             </div>
           </div>
         </div>
@@ -557,6 +585,13 @@ input,textarea,select{
         <div style="display:flex;gap:8px;">
           <button class="btn btn-secondary" id="editProfileButton" style="flex:1;margin:0;">Edit profile</button>
           <button class="btn btn-secondary" style="flex:1;margin:0;">Share profile</button>
+        </div>
+
+        <div class="highlights-bar">
+          <div class="highlight-item">
+            <div class="highlight-circle" style="border:2px dashed var(--muted);font-size:24px;">+</div>
+            <span>New</span>
+          </div>
         </div>
       </div>
     </div>
@@ -582,7 +617,7 @@ input,textarea,select{
   </nav>
 </section>
 
-<!-- ADVANCED POST / STORY CREATOR MODAL -->
+<!-- Post / Story Creator Modal -->
 <div id="storyModal" class="modal-overlay hidden">
   <div class="modal-box">
     <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--border);">
@@ -598,14 +633,38 @@ input,textarea,select{
 
     <div class="create-post-menu">
       <div class="menu-row-item" id="menuAddAudio"><span>🎵 Add audio</span> <span>›</span></div>
-      <div class="menu-row-item" id="menuTagPeople"><span>👤 Tag people</span> <span>›</span></div>
+      <div class="menu-row-item" id="menuTagPeople"><span>👤 Tag people & Invite collaborators</span> <span>›</span></div>
       <div class="menu-row-item" id="menuAddLocation"><span>📍 Add location</span> <span>›</span></div>
     </div>
 
     <input id="storySong" placeholder="Song title" class="hidden">
-    <input id="storyMention" placeholder="@tag user" class="hidden">
+    <input id="storyMention" placeholder="@tag user / collaborator" class="hidden">
 
     <button class="btn" id="publishStoryBtn" style="margin-top:15px;">Share</button>
+  </div>
+</div>
+
+<!-- Settings & Activity Modal -->
+<div id="settingsModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--border);">
+      <span style="font-weight:800;color:var(--bright);">Settings and activity</span>
+      <button class="icon-btn" id="closeSettingsModal">✕</button>
+    </div>
+
+    <input style="margin:12px 0;" placeholder="Search settings...">
+
+    <div style="font-size:12px;color:var(--muted);margin:8px 0;">Your account</div>
+    <div class="settings-item" onclick="alert('Account Center settings opened')"><span>Account Center (Password, security, personal details)</span> <span>›</span></div>
+
+    <div style="font-size:12px;color:var(--muted);margin:12px 0 8px;">How you use EyeBook</div>
+    <div class="settings-item" onclick="alert('Saved items')"><span>Saved</span> <span>›</span></div>
+    <div class="settings-item" onclick="alert('Archive items')"><span>Archive</span> <span>›</span></div>
+    <div class="settings-item" onclick="alert('Your activity')"><span>Your activity</span> <span>›</span></div>
+    <div class="settings-item" onclick="alert('Notifications')"><span>Notifications</span> <span>›</span></div>
+    <div class="settings-item" onclick="alert('Time management')"><span>Time management</span> <span>›</span></div>
+
+    <button class="btn btn-danger" id="logoutButton" style="margin-top:20px;">Log out</button>
   </div>
 </div>
 
@@ -622,7 +681,7 @@ input,textarea,select{
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, onAuthStateChanged, RecaptchaVerifier, signInWithPhoneNumber, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, collection, addDoc, query, orderBy, limit, serverTimestamp, onSnapshot, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, collection, addDoc, query, orderBy, serverTimestamp, onSnapshot, getDocs, where } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 
 const firebaseConfig = {
@@ -705,21 +764,25 @@ $("apkDownloadBtn").onclick = () => {
 $("headerAddBtn").onclick = () => $("storyModal").classList.remove("hidden");
 $("triggerAddStory").onclick = () => $("storyModal").classList.remove("hidden");
 $("closeStoryModal").onclick = () => $("storyModal").classList.add("hidden");
+
+$("openSettingsBtn").onclick = () => $("settingsModal").classList.remove("hidden");
+$("closeSettingsModal").onclick = () => $("settingsModal").classList.add("hidden");
+
 $("openReelModalBtn").onclick = () => $("reelModal").classList.remove("hidden");
 $("closeReelModal").onclick = () => $("reelModal").classList.add("hidden");
 
 $("menuAddAudio").onclick = () => {
-  const song = prompt("Add Audio / Song:", "Trending EyeBook Beat");
+  const song = prompt("Add Audio / Song:", "Skins 2 (Ultra Slowed)");
   if(song) $("storySong").value = song;
 };
 
 $("menuTagPeople").onclick = () => {
-  const user = prompt("Tag people:", "@friend");
+  const user = prompt("Tag people or invite collaborators (@username):", "");
   if(user) $("storyMention").value = user;
 };
 
 $("menuAddLocation").onclick = () => {
-  prompt("Add location:", "Bihar, India");
+  prompt("Add location:", "");
 };
 
 $("createProfileButton").onclick = async () => {
@@ -770,6 +833,24 @@ $("publishStoryBtn").onclick = async () => {
     alert("Published successfully!");
   } catch(e) { alert(e.message); }
 };
+
+async function loadRealStats(uid) {
+  try {
+    // Real Post count
+    const postsSnap = await getDocs(query(collection(db, "posts"), where("uid", "==", uid)));
+    $("statPosts").textContent = postsSnap.size;
+
+    // Real Followers count (0 if none)
+    const followersSnap = await getDocs(query(collection(db, "follows"), where("followingId", "==", uid)));
+    $("statFollowers").textContent = followersSnap.size;
+
+    // Real Following count (0 if none)
+    const followingSnap = await getDocs(query(collection(db, "follows"), where("followerId", "==", uid)));
+    $("statFollowing").textContent = followingSnap.size;
+  } catch(e) {
+    console.error(e);
+  }
+}
 
 function startFeeds() {
   onSnapshot(query(collection(db, "posts"), orderBy("createdAt", "desc")), snap => {
@@ -825,6 +906,8 @@ function loadUserProfile() {
   $("profileAvatarDisplay").innerHTML = dpHTML;
   $("myStoryAvatarContainer").innerHTML = dpHTML;
   $("navProfileDpContainer").innerHTML = dpHTML;
+
+  loadRealStats(currentUser.uid);
 }
 
 onAuthStateChanged(auth, async user => {
@@ -834,6 +917,8 @@ onAuthStateChanged(auth, async user => {
   if(!docSnap.exists() || !docSnap.data().name) { showScreen("setup"); } 
   else { profile = docSnap.data(); loadUserProfile(); showScreen("app"); startFeeds(); }
 });
+
+$("logoutButton").onclick = () => signOut(auth);
 </script>
 </body>
 </html>
