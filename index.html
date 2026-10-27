@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#06130e">
-<meta name="description" content="EyeBook — Connect, share and discover your world like Instagram.">
+<meta name="description" content="EyeBook — Connect, share and discover your world.">
 
 <title>EyeBook — Connect Your World</title>
 
-<!-- PWA Manifest & App Icon Config -->
+<!-- PWA Manifest for Standalone Native App Feel -->
 <link rel="manifest" href='data:application/manifest+json,{
   "name": "EyeBook",
   "short_name": "EyeBook",
@@ -111,7 +111,7 @@ button:disabled{opacity:.55;cursor:wait}
 }
 .icon-btn svg{width:24px;height:24px;fill:currentColor}
 
-/* Hide Download Button when installed as App */
+/* Hide Download Button inside Installed PWA App */
 @media all and (display-mode: standalone) {
   #apkDownloadBtn { display: none !important; }
 }
@@ -185,7 +185,7 @@ input,textarea,select{
   color:white;
 }
 
-/* Stories Bar with Dynamic Ring */
+/* Dynamic Instagram Stories Bar */
 .stories-container{
   display:flex;
   gap:14px;
@@ -363,7 +363,6 @@ input,textarea,select{
   overflow-y:auto;
 }
 
-/* Instagram Post Creator Studio UI (Matching Screenshots) */
 .create-post-menu{
   display:flex;
   flex-direction:column;
@@ -404,7 +403,6 @@ input,textarea,select{
     <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
   </button>
   <div class="brand" id="brandHome">
-    <!-- Professional Eye Logo -->
     <span class="logo">
       <svg viewBox="0 0 100 70" aria-label="EyeBook Logo">
         <defs>
@@ -448,7 +446,7 @@ input,textarea,select{
         <button class="btn btn-secondary" id="googleButton">Continue with Google</button>
       </div>
 
-      <!-- Mobile Login with Continue button first -->
+      <!-- Mobile Login with Continue button -->
       <div id="phoneScreen" class="hidden">
         <h3>Mobile Login</h3>
         <label>Indian Mobile Number</label>
@@ -540,7 +538,7 @@ input,textarea,select{
       </div>
     </div>
 
-    <!-- Profile Tab matching Screenshot Layout -->
+    <!-- Profile Tab Matching Screenshot -->
     <div id="profileTab" class="tab-content hidden">
       <div class="card">
         <div style="display:flex;align-items:center;gap:15px;margin-bottom:12px;">
@@ -584,10 +582,10 @@ input,textarea,select{
   </nav>
 </section>
 
-<!-- ADVANCED POST / STORY CREator MODAL (Matching Screenshots) -->
+<!-- ADVANCED POST / STORY CREATOR MODAL -->
 <div id="storyModal" class="modal-overlay hidden">
   <div class="modal-box">
-    <div class="story-studio-header">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--border);">
       <span style="font-weight:800;color:var(--bright);">New Post / Story</span>
       <button class="icon-btn" id="closeStoryModal">✕</button>
     </div>
@@ -666,7 +664,7 @@ document.querySelectorAll(".nav button").forEach(btn => {
   };
 });
 
-/* Auth Flow with Continue Button */
+/* Auth Flow */
 $("showPhoneButton").onclick = () => { $("startScreen").classList.add("hidden"); $("phoneScreen").classList.remove("hidden"); };
 $("phoneBackButton").onclick = () => { $("phoneScreen").classList.add("hidden"); $("startScreen").classList.remove("hidden"); };
 $("showEmailButton").onclick = () => { $("startScreen").classList.add("hidden"); $("emailScreen").classList.remove("hidden"); };
@@ -710,7 +708,6 @@ $("closeStoryModal").onclick = () => $("storyModal").classList.add("hidden");
 $("openReelModalBtn").onclick = () => $("reelModal").classList.remove("hidden");
 $("closeReelModal").onclick = () => $("reelModal").classList.add("hidden");
 
-/* Menu item actions matching screenshots */
 $("menuAddAudio").onclick = () => {
   const song = prompt("Add Audio / Song:", "Trending EyeBook Beat");
   if(song) $("storySong").value = song;
@@ -722,7 +719,7 @@ $("menuTagPeople").onclick = () => {
 };
 
 $("menuAddLocation").onclick = () => {
-  prompt("Add location:", "Purnia, Bihar");
+  prompt("Add location:", "Bihar, India");
 };
 
 $("createProfileButton").onclick = async () => {
