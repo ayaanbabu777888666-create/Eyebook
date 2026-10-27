@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#06130e">
-<meta name="description" content="EyeBook — Connect, share and discover your world.">
+<meta name="description" content="EyeBook — Connect, share and discover your world like Instagram.">
 
 <title>EyeBook — Connect Your World</title>
 
-<!-- PWA Manifest for True App Experience -->
+<!-- PWA Manifest & App Icon Config -->
 <link rel="manifest" href='data:application/manifest+json,{
   "name": "EyeBook",
   "short_name": "EyeBook",
@@ -111,6 +111,7 @@ button:disabled{opacity:.55;cursor:wait}
 }
 .icon-btn svg{width:24px;height:24px;fill:currentColor}
 
+/* Hide Download Button when installed as App */
 @media all and (display-mode: standalone) {
   #apkDownloadBtn { display: none !important; }
 }
@@ -362,58 +363,37 @@ input,textarea,select{
   overflow-y:auto;
 }
 
-.story-studio-header{
+/* Instagram Post Creator Studio UI (Matching Screenshots) */
+.create-post-menu{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:10px;
+}
+
+.menu-row-item{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding-bottom:10px;
-  margin-bottom:8px;
-  border-bottom:1px solid var(--border);
-}
-
-.story-tools-row{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  overflow-x:auto;
-  padding:6px 0;
-}
-
-.story-tool-btn{
-  background:#143828;
-  border:1px solid var(--border);
-  color:var(--bright);
-  padding:8px 12px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:700;
-  display:flex;
-  align-items:center;
-  gap:6px;
-  white-space:nowrap;
-}
-
-.song-line-bar{
+  padding:12px;
   background:#091b12;
   border:1px solid var(--border);
-  border-radius:10px;
-  padding:8px 12px;
-  margin:8px 0;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:12px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+  font-size:14px;
   color:var(--bright);
 }
 
-.manage-media-box{
-  border:1px dashed var(--green);
-  background:rgba(24,183,119,0.05);
-  border-radius:12px;
-  padding:12px;
-  margin:10px 0;
+.profile-stats-row{
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  margin:15px 0;
   text-align:center;
 }
+.stat-num{font-size:18px;font-weight:900;color:var(--text)}
+.stat-label{font-size:12px;color:var(--muted)}
 </style>
 </head>
 
@@ -560,15 +540,26 @@ input,textarea,select{
       </div>
     </div>
 
+    <!-- Profile Tab matching Screenshot Layout -->
     <div id="profileTab" class="tab-content hidden">
-      <div class="card" style="text-align:center;">
-        <div style="display:flex;justify-content:center;margin-bottom:10px;">
-          <div style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:2px solid var(--bright);" id="profileAvatarDisplay">E</div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:15px;margin-bottom:12px;">
+          <div style="width:75px;height:75px;border-radius:50%;overflow:hidden;border:2px solid var(--bright);" id="profileAvatarDisplay">E</div>
+          <div style="flex:1;">
+            <h2 id="profileUsername" style="margin:0;font-size:16px;">@username</h2>
+            <div class="profile-stats-row" style="margin:8px 0 0;justify-content:space-between;">
+              <div><span class="stat-num">41</span><div class="stat-label">posts</div></div>
+              <div><span class="stat-num">1,956</span><div class="stat-label">followers</div></div>
+              <div><span class="stat-num">423</span><div class="stat-label">following</div></div>
+            </div>
+          </div>
         </div>
-        <h2 id="profileName">Name</h2>
-        <p id="profileUsername" class="muted">@username</p>
-        <p id="profileBio"></p>
-        <button class="btn btn-secondary" id="editProfileButton">Edit Profile & DP</button>
+        <div style="font-weight:800;" id="profileName">Name</div>
+        <p id="profileBio" style="margin:4px 0 12px;font-size:13px;"></p>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-secondary" id="editProfileButton" style="flex:1;margin:0;">Edit profile</button>
+          <button class="btn btn-secondary" style="flex:1;margin:0;">Share profile</button>
+        </div>
       </div>
     </div>
 
@@ -593,46 +584,30 @@ input,textarea,select{
   </nav>
 </section>
 
-<!-- STORY STUDIO MODAL -->
+<!-- ADVANCED POST / STORY CREator MODAL (Matching Screenshots) -->
 <div id="storyModal" class="modal-overlay hidden">
   <div class="modal-box">
     <div class="story-studio-header">
-      <span style="font-weight:800;color:var(--bright);">Story Creator</span>
+      <span style="font-weight:800;color:var(--bright);">New Post / Story</span>
       <button class="icon-btn" id="closeStoryModal">✕</button>
     </div>
 
-    <div class="story-tools-row">
-      <button class="story-tool-btn" id="btnSongSelect">🎵 Song</button>
-      <button class="story-tool-btn" id="btnMention">🔄 @Mention</button>
-      <button class="story-tool-btn" id="btnFilter">✨ Filters</button>
-      <button class="story-tool-btn" id="btnEffects">🪄 Effects</button>
+    <label>Select Photo/Video</label>
+    <input id="storyFile" type="file" accept="image/*,video/*">
+
+    <label>Caption</label>
+    <input id="storyText" maxlength="100" placeholder="Add a caption...">
+
+    <div class="create-post-menu">
+      <div class="menu-row-item" id="menuAddAudio"><span>🎵 Add audio</span> <span>›</span></div>
+      <div class="menu-row-item" id="menuTagPeople"><span>👤 Tag people</span> <span>›</span></div>
+      <div class="menu-row-item" id="menuAddLocation"><span>📍 Add location</span> <span>›</span></div>
     </div>
 
-    <div class="song-line-bar" id="songDisplayBar">
-      <span>🎶</span> <span id="selectedSongName">Trending EyeBook Sound - Original Audio</span>
-    </div>
-
-    <div class="manage-media-box">
-      <button class="btn btn-secondary" id="manageGalleryBtn" style="margin:0;font-size:13px;">📁 Manage Gallery & Files</button>
-      <p class="muted" style="margin:6px 0 0;">Tap Manage to pick photo/video.</p>
-    </div>
-
-    <input id="storyFile" type="file" accept="image/*,video/*" class="hidden">
-    <input id="storyMention" placeholder="@friend username" class="hidden">
     <input id="storySong" placeholder="Song title" class="hidden">
+    <input id="storyMention" placeholder="@tag user" class="hidden">
 
-    <label>Caption / Text</label>
-    <input id="storyText" maxlength="100" placeholder="Add text to story...">
-
-    <label>Select Filter Effect</label>
-    <select id="storyFilter">
-      <option value="normal">Normal Original</option>
-      <option value="grayscale">Black & White Film</option>
-      <option value="sepia">Vintage Sepia</option>
-      <option value="bright">Super Bright Glow</option>
-    </select>
-
-    <button class="btn" id="publishStoryBtn">Share Story</button>
+    <button class="btn" id="publishStoryBtn" style="margin-top:15px;">Share</button>
   </div>
 </div>
 
@@ -735,20 +710,20 @@ $("closeStoryModal").onclick = () => $("storyModal").classList.add("hidden");
 $("openReelModalBtn").onclick = () => $("reelModal").classList.remove("hidden");
 $("closeReelModal").onclick = () => $("reelModal").classList.add("hidden");
 
-$("manageGalleryBtn").onclick = () => $("storyFile").click();
-
-$("btnSongSelect").onclick = () => {
-  const song = prompt("Enter Song / Audio Title:", "EyeBook Trending Beat");
-  if(song) { $("selectedSongName").textContent = song; $("storySong").value = song; }
+/* Menu item actions matching screenshots */
+$("menuAddAudio").onclick = () => {
+  const song = prompt("Add Audio / Song:", "Trending EyeBook Beat");
+  if(song) $("storySong").value = song;
 };
 
-$("btnMention").onclick = () => {
-  const mention = prompt("Enter username to mention:", "@friend");
-  if(mention) $("storyMention").value = mention;
+$("menuTagPeople").onclick = () => {
+  const user = prompt("Tag people:", "@friend");
+  if(user) $("storyMention").value = user;
 };
 
-$("btnFilter").onclick = () => $("storyFilter").focus();
-$("btnEffects").onclick = () => alert("Effects applied to Story Studio!");
+$("menuAddLocation").onclick = () => {
+  prompt("Add location:", "Purnia, Bihar");
+};
 
 $("createProfileButton").onclick = async () => {
   const name = $("fullName").value.trim();
@@ -777,7 +752,7 @@ $("createProfileButton").onclick = async () => {
 
 $("publishStoryBtn").onclick = async () => {
   const file = $("storyFile").files[0];
-  if(!file) return alert("Please click 'Manage Gallery & Files' to choose media.");
+  if(!file) return alert("Please select photo or video.");
   try {
     const sRef = ref(storage, `stories/${currentUser.uid}_${Date.now()}`);
     await uploadBytes(sRef, file);
@@ -789,13 +764,13 @@ $("publishStoryBtn").onclick = async () => {
       dpUrl: profile.dpUrl || "",
       mediaUrl,
       mention: $("storyMention").value.trim(),
-      song: $("selectedSongName").textContent,
+      song: $("storySong").value.trim(),
       createdAt: serverTimestamp(),
       expiresAt: Date.now() + 86400000
     });
 
     $("storyModal").classList.add("hidden");
-    alert("Story uploaded successfully!");
+    alert("Published successfully!");
   } catch(e) { alert(e.message); }
 };
 
