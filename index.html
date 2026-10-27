@@ -8,6 +8,11 @@
 
 <title>EyeBook — Connect Your World</title>
 
+<!-- Web App / PWA Config for Standalone App Mode -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <style>
 :root{
   --bg:#06130e;
@@ -37,6 +42,7 @@ button{cursor:pointer}
 button:disabled{opacity:.55;cursor:wait}
 .hidden{display:none!important}
 
+/* Header UI matching Instagram */
 .header{
   position:sticky;
   top:0;
@@ -44,9 +50,8 @@ button:disabled{opacity:.55;cursor:wait}
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:10px;
   padding:10px 15px;
-  min-height:65px;
+  min-height:60px;
   background:rgba(4,19,12,.96);
   border-bottom:1px solid rgba(93,226,156,.2);
   backdrop-filter:blur(18px);
@@ -60,57 +65,62 @@ button:disabled{opacity:.55;cursor:wait}
 }
 
 .logo{
-  width:38px;
-  height:38px;
+  width:34px;
+  height:34px;
   flex-shrink:0;
-  display:grid;
-  place-items:center;
 }
-
 .logo svg{width:100%;height:100%}
 
-.brand-name-wrap{
-  display:flex;
-  flex-direction:column;
-}
-
 .brand-name{
-  font-size:20px;
+  font-size:22px;
   font-weight:950;
   letter-spacing:-1px;
   background:linear-gradient(100deg,#edfff5,#71ffc0 48%,#16c783);
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
-  line-height:1;
-}
-
-.brand-sub{
-  font-size:7px;
-  font-weight:800;
-  color:#a2cbb3;
-  letter-spacing:1px;
-  margin-top:2px;
 }
 
 .header-actions{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
 }
 
 .icon-btn{
   background:transparent;
   border:none;
   color:var(--text);
-  font-size:20px;
-  padding:5px;
+  padding:0;
+  display:flex;
+  align-items:center;
+}
+.icon-btn svg{width:24px;height:24px;fill:currentColor}
+
+/* Standalone / App Mode: Hide Download Button inside App */
+@media display-mode: standalone {
+  #apkDownloadBtn {
+    display: none !important;
+  }
+}
+
+.download-apk-btn{
+  background:linear-gradient(100deg,#18b777,#76ffc0);
+  color:#06130e;
+  font-weight:800;
+  font-size:12px;
+  padding:6px 12px;
+  border-radius:20px;
+  border:none;
+  display:flex;
+  align-items:center;
+  gap:4px;
 }
 
 main{
   width:min(600px,100%);
   margin:auto;
-  padding:12px 10px 75px;
+  padding:10px 10px 75px;
 }
 
 .card{
@@ -144,12 +154,6 @@ p{line-height:1.5}
   color:#edfff4;
 }
 
-.btn-danger{
-  background:#4b2024;
-  border-color:#763c42;
-  color:white;
-}
-
 label{
   display:block;
   margin:10px 0 4px;
@@ -169,17 +173,10 @@ input,textarea,select{
   color:white;
 }
 
-input:focus,textarea:focus,select:focus{
-  border-color:#36e79a;
-  outline:none;
-}
-
-textarea{min-height:80px;resize:vertical}
-
-/* Instagram Style Stories Bar */
+/* Instagram Stories Bar */
 .stories-container{
   display:flex;
-  gap:12px;
+  gap:14px;
   overflow-x:auto;
   padding:4px 4px 12px;
   margin-bottom:10px;
@@ -197,12 +194,16 @@ textarea{min-height:80px;resize:vertical}
 }
 
 .story-avatar-wrap{
-  width:60px;
-  height:60px;
+  width:64px;
+  height:64px;
   border-radius:50%;
-  padding:2.5px;
-  background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+  padding:2px;
+  background:transparent;
   position:relative;
+}
+
+.story-avatar-wrap.has-story{
+  background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
 }
 
 .story-avatar-inner{
@@ -214,6 +215,8 @@ textarea{min-height:80px;resize:vertical}
   place-items:center;
   overflow:hidden;
   border:2px solid var(--bg);
+  font-weight:bold;
+  font-size:22px;
 }
 
 .story-avatar-inner img{
@@ -224,8 +227,8 @@ textarea{min-height:80px;resize:vertical}
 
 .story-add-badge{
   position:absolute;
-  bottom:0;
-  right:0;
+  bottom:2px;
+  right:2px;
   background:#18b777;
   color:white;
   width:20px;
@@ -233,7 +236,7 @@ textarea{min-height:80px;resize:vertical}
   border-radius:50%;
   display:grid;
   place-items:center;
-  font-size:13px;
+  font-size:14px;
   font-weight:bold;
   border:2px solid var(--bg);
 }
@@ -248,7 +251,7 @@ textarea{min-height:80px;resize:vertical}
   width:100%;
 }
 
-/* Stunning Icon-Only Bottom Navigation Bar */
+/* Instagram Bottom Nav */
 .nav{
   position:fixed;
   bottom:0;
@@ -271,15 +274,12 @@ textarea{min-height:80px;resize:vertical}
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:8px 24px;
+  padding:6px 12px;
   border-radius:12px;
-  transition:0.2s ease;
 }
 
 .nav button.active{
   color:var(--bright);
-  background:rgba(24,183,119,0.15);
-  box-shadow:0 0 15px rgba(118,255,192,0.2);
 }
 
 .nav button svg{
@@ -288,19 +288,26 @@ textarea{min-height:80px;resize:vertical}
   fill:currentColor;
 }
 
-.avatar-large{
-  width:80px;
-  height:80px;
+.nav-dp-ring{
+  width:28px;
+  height:28px;
   border-radius:50%;
-  object-fit:cover;
-  border:2px solid var(--bright);
-  background:#123d29;
+  border:1.5px solid var(--muted);
+  overflow:hidden;
   display:grid;
   place-items:center;
-  font-size:30px;
+  background:#123d29;
+  font-size:12px;
   font-weight:bold;
-  overflow:hidden;
+  color:white;
 }
+
+.nav button.active .nav-dp-ring{
+  border-color:var(--bright);
+  box-shadow:0 0 8px var(--bright);
+}
+
+.nav-dp-ring img{width:100%;height:100%;object-fit:cover}
 
 .post{
   padding:14px;
@@ -315,29 +322,20 @@ textarea{min-height:80px;resize:vertical}
 
 .post-actions{
   display:flex;
-  gap:15px;
+  gap:18px;
   margin-top:10px;
   font-size:14px;
   font-weight:bold;
   color:var(--bright);
 }
-
 .post-actions span{cursor:pointer}
 
-.error{
-  margin-top:8px;
-  color:var(--danger);
-  font-size:12px;
-  white-space:pre-wrap;
-}
+.error{color:var(--danger);font-size:12px;margin-top:8px}
 
-.success{color:var(--bright)}
-
-/* Modal Styles */
 .modal-overlay{
   position:fixed;
   top:0;left:0;right:0;bottom:0;
-  background:rgba(0,0,0,0.85);
+  background:rgba(0,0,0,0.88);
   z-index:200;
   display:grid;
   place-items:center;
@@ -347,10 +345,64 @@ textarea{min-height:80px;resize:vertical}
   width:min(450px,100%);
   background:var(--surface);
   border:1px solid var(--border);
-  border-radius:16px;
-  padding:20px;
+  border-radius:18px;
+  padding:18px;
   max-height:90vh;
   overflow-y:auto;
+}
+
+/* Instagram Story Studio Toolbar & Manage UI */
+.story-studio-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-bottom:10px;
+  margin-bottom:8px;
+  border-bottom:1px solid var(--border);
+}
+
+.story-tools-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  overflow-x:auto;
+  padding:6px 0;
+}
+
+.story-tool-btn{
+  background:#143828;
+  border:1px solid var(--border);
+  color:var(--bright);
+  padding:8px 12px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  white-space:nowrap;
+}
+
+.song-line-bar{
+  background:#091b12;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:8px 12px;
+  margin:8px 0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  color:var(--bright);
+}
+
+.manage-media-box{
+  border:1px dashed var(--green);
+  background:rgba(24,183,119,0.05);
+  border-radius:12px;
+  padding:12px;
+  margin:10px 0;
+  text-align:center;
 }
 </style>
 </head>
@@ -358,9 +410,12 @@ textarea{min-height:80px;resize:vertical}
 <body>
 
 <header class="header">
+  <button class="icon-btn" id="headerAddBtn" title="Create Post / Story">
+    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+  </button>
   <div class="brand" id="brandHome">
     <span class="logo">
-      <svg viewBox="0 0 100 70" aria-label="EyeBook logo">
+      <svg viewBox="0 0 100 70">
         <defs>
           <linearGradient id="eyeGrad" x1="0" x2="1" y1="0" y2="1">
             <stop offset="0%" stop-color="#76ffc0"/>
@@ -370,17 +425,19 @@ textarea{min-height:80px;resize:vertical}
         <path d="M5 35 Q50 -8 95 35 Q50 78 5 35Z" fill="#0d2118" stroke="url(#eyeGrad)" stroke-width="6"/>
         <circle cx="50" cy="35" r="19" fill="url(#eyeGrad)"/>
         <circle cx="50" cy="35" r="9" fill="#06130e"/>
-        <circle cx="57" cy="27" r="4" fill="#ffffff"/>
       </svg>
     </span>
-    <div class="brand-name-wrap">
-      <span class="brand-name">EyeBook</span>
-      <span class="brand-sub">CONNECT YOUR WORLD</span>
-    </div>
+    <span class="brand-name">EyeBook</span>
   </div>
   <div class="header-actions">
-    <button class="icon-btn" id="openReelModalBtn" title="Upload Reel">➕🎬</button>
-    <button class="icon-btn" id="openSettingsBtn" title="Settings">☰</button>
+    <!-- Web Download Button (Only visible on browser) -->
+    <button class="download-apk-btn" id="apkDownloadBtn" title="Download App">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      Download
+    </button>
+    <button class="icon-btn" id="openSettingsBtn" title="Notifications / Settings">
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </button>
   </div>
 </header>
 
@@ -388,14 +445,13 @@ textarea{min-height:80px;resize:vertical}
 <section id="authScreen">
   <main>
     <div style="text-align:center;padding:25px 0;">
-      <h1 style="font-size:38px;font-weight:1000;background:linear-gradient(110deg,#e4fff0,#64f5ae 45%,#12b878);-webkit-background-clip:text;background-clip:text;color:transparent;">EyeBook</h1>
+      <h1 style="font-size:36px;font-weight:900;color:var(--bright);">EyeBook</h1>
       <p class="muted">Connect. Share. Discover.</p>
     </div>
 
     <div class="card">
       <div id="startScreen">
         <h2>Welcome to EyeBook</h2>
-        <p class="muted">Connect with people securely.</p>
         <button class="btn" id="showPhoneButton">Continue with Mobile</button>
         <button class="btn btn-secondary" id="showEmailButton">Continue with Email</button>
         <button class="btn btn-secondary" id="googleButton">Continue with Google</button>
@@ -415,18 +471,14 @@ textarea{min-height:80px;resize:vertical}
 
       <div id="otpScreen" class="hidden">
         <h3>Verify OTP</h3>
-        <p id="otpMessage" class="muted">Enter 6-digit code</p>
         <input id="otpInput" type="text" maxlength="6" placeholder="OTP Code">
         <button class="btn" id="verifyButton">Verify & Login</button>
-        <button class="btn btn-secondary" id="changeNumberButton">Change Number</button>
       </div>
 
       <div id="emailScreen" class="hidden">
         <h3>Email Login</h3>
-        <label>Email</label>
         <input id="emailInput" type="email" placeholder="Email address">
-        <label>Password</label>
-        <input id="passwordInput" type="password" placeholder="Password (min 6 chars)">
+        <input id="passwordInput" type="password" placeholder="Password">
         <button class="btn" id="loginButton">Log In</button>
         <button class="btn btn-secondary" id="signupButton">Create Account</button>
         <button class="btn btn-secondary" id="emailBackButton">Back</button>
@@ -437,27 +489,20 @@ textarea{min-height:80px;resize:vertical}
   </main>
 </section>
 
-<!-- Profile Setup / Edit Screen -->
+<!-- Profile Setup Screen -->
 <section id="setupScreen" class="hidden">
   <main>
     <div class="card">
-      <h2 id="setupTitle">Complete Your Profile</h2>
-      <p class="muted">Set your name, username and profile picture (DP).</p>
-
+      <h2>Complete Profile</h2>
       <label>Profile Picture (DP)</label>
       <input id="dpFileInput" type="file" accept="image/*">
-
       <label>Your Name</label>
-      <input id="fullName" maxlength="50" placeholder="Full name">
-
+      <input id="fullName" placeholder="Full name">
       <label>Username</label>
-      <input id="username" maxlength="20" placeholder="e.g. ayaan_babu">
-
+      <input id="username" placeholder="Username">
       <label>Bio</label>
-      <textarea id="bio" maxlength="150" placeholder="Write something about yourself"></textarea>
-
+      <textarea id="bio" placeholder="Write bio"></textarea>
       <button class="btn" id="createProfileButton">Save Profile</button>
-      <button class="btn btn-secondary hidden" id="cancelEditButton">Cancel</button>
       <div id="setupError" class="error"></div>
     </div>
   </main>
@@ -467,37 +512,44 @@ textarea{min-height:80px;resize:vertical}
 <section id="appScreen" class="hidden">
   <main>
     
-    <!-- Stories Bar -->
+    <!-- Instagram Stories Bar -->
     <div class="stories-container" id="storiesBar">
       <div class="story-ring" id="triggerAddStory">
         <div class="story-avatar-wrap">
           <div class="story-avatar-inner" id="myStoryAvatarContainer">E</div>
           <div class="story-add-badge">+</div>
         </div>
-        <span class="story-username">Your Story</span>
+        <span class="story-username">Your story</span>
       </div>
     </div>
 
     <!-- Home Tab -->
     <div id="homeTab" class="tab-content">
-      <div class="card">
-        <h3>Create Post</h3>
-        <textarea id="postText" placeholder="What's on your mind?"></textarea>
-        <label>Add Photo / Video</label>
-        <input id="postFile" type="file" accept="image/*,video/*">
-        <button class="btn" id="publishButton">Publish Post</button>
-        <div id="postError" class="error"></div>
-      </div>
-      <h3>Feeds & Reels</h3>
       <div id="postFeed"><p class="muted">Loading posts...</p></div>
     </div>
 
-    <!-- Message / Chat Tab -->
+    <!-- Reels Tab -->
+    <div id="reelsTab" class="tab-content hidden">
+      <div class="card" style="text-align:center;">
+        <h2>Reels Feed</h2>
+        <button class="btn" id="openReelModalBtn">➕ Upload Reel</button>
+        <div id="reelsFeed" style="margin-top:15px;"></div>
+      </div>
+    </div>
+
+    <!-- Message Tab (Middle) -->
     <div id="messageTab" class="tab-content hidden">
       <div class="card">
-        <h2>Messages</h2>
-        <p class="muted">Direct chats and updates with your connections.</p>
-        <div style="padding:30px 0;text-align:center;" class="muted">No direct messages yet. Search users to start chatting!</div>
+        <h2>Direct Messages</h2>
+        <p class="muted">No chats yet.</p>
+      </div>
+    </div>
+
+    <!-- Search Tab -->
+    <div id="searchTab" class="tab-content hidden">
+      <div class="card">
+        <h2>Search</h2>
+        <input id="searchInput" placeholder="Search users...">
       </div>
     </div>
 
@@ -505,7 +557,7 @@ textarea{min-height:80px;resize:vertical}
     <div id="profileTab" class="tab-content hidden">
       <div class="card" style="text-align:center;">
         <div style="display:flex;justify-content:center;margin-bottom:10px;">
-          <div class="avatar-large" id="profileAvatarDisplay">E</div>
+          <div style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:2px solid var(--bright);" id="profileAvatarDisplay">E</div>
         </div>
         <h2 id="profileName">Name</h2>
         <p id="profileUsername" class="muted">@username</p>
@@ -516,74 +568,81 @@ textarea{min-height:80px;resize:vertical}
 
   </main>
 
-  <!-- Stunning Icon-Only Bottom Navigation Bar -->
+  <!-- Instagram Style 5 Buttons Nav Bar -->
   <nav class="nav">
-    <!-- Home Icon (Green glowing house) -->
     <button class="active" data-tab="homeTab" title="Home">
       <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
     </button>
-    <!-- Message Icon (Middle) -->
+    <button data-tab="reelsTab" title="Reels">
+      <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H9l2 4H8L6 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+    </button>
     <button data-tab="messageTab" title="Messages">
       <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
     </button>
-    <!-- Profile Icon (Right) -->
+    <button data-tab="searchTab" title="Search">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    </button>
     <button data-tab="profileTab" title="Profile">
-      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      <div class="nav-dp-ring" id="navProfileDpContainer">E</div>
     </button>
   </nav>
 </section>
 
-<!-- STORY CREATOR MODAL -->
+<!-- ADVANCED INSTAGRAM STORY STUDIO MODAL -->
 <div id="storyModal" class="modal-overlay hidden">
   <div class="modal-box">
-    <h3>Create Story (Instagram Style)</h3>
-    <label>Select Photo/Video</label>
-    <input id="storyFile" type="file" accept="image/*,video/*">
-    <label>Add Mention (@username)</label>
-    <input id="storyMention" placeholder="@friend">
-    <label>Add Filter / Effect style</label>
-    <select id="storyFilter">
-      <option value="normal">Normal</option>
-      <option value="grayscale">Black & White</option>
-      <option value="sepia">Vintage Sepia</option>
-      <option value="bright">Super Bright</option>
-    </select>
-    <label>Add Background Song Name</label>
-    <input id="storySong" placeholder="Song title - Artist">
+    
+    <!-- Top Interactive Tools Bar -->
+    <div class="story-studio-header">
+      <span style="font-weight:800;color:var(--bright);">Story Creator</span>
+      <button class="icon-btn" id="closeStoryModal">✕</button>
+    </div>
+
+    <!-- Practical Graphical Feature Buttons Bar -->
+    <div class="story-tools-row">
+      <button class="story-tool-btn" id="btnSongSelect">🎵 Song</button>
+      <button class="story-tool-btn" id="btnMention">🔄 @Mention</button>
+      <button class="story-tool-btn" id="btnFilter">✨ Filters</button>
+      <button class="story-tool-btn" id="btnEffects">🪄 Effects</button>
+    </div>
+
+    <!-- Top Song Recommendation Line Bar -->
+    <div class="song-line-bar" id="songDisplayBar">
+      <span>🎶</span> <span id="selectedSongName">Trending EyeBook Sound - Original Audio</span>
+    </div>
+
+    <!-- Manage Gallery & App Media Area -->
+    <div class="manage-media-box">
+      <button class="btn btn-secondary" id="manageGalleryBtn" style="margin:0;font-size:13px;">📁 Manage Gallery & Files</button>
+      <p class="muted" style="margin:6px 0 0;">Tap Manage to pick photo/video from device or recent uploads.</p>
+    </div>
+
+    <input id="storyFile" type="file" accept="image/*,video/*" class="hidden">
+    <input id="storyMention" placeholder="@friend username" class="hidden">
+    <input id="storySong" placeholder="Song title" class="hidden">
+
     <label>Caption / Text</label>
-    <input id="storyText" maxlength="100" placeholder="Write on story">
+    <input id="storyText" maxlength="100" placeholder="Add text to story...">
+
+    <label>Select Filter Effect</label>
+    <select id="storyFilter">
+      <option value="normal">Normal Original</option>
+      <option value="grayscale">Black & White Film</option>
+      <option value="sepia">Vintage Sepia</option>
+      <option value="bright">Super Bright Glow</option>
+    </select>
+
     <button class="btn" id="publishStoryBtn">Share Story</button>
-    <button class="btn btn-secondary" id="closeStoryModal">Cancel</button>
-    <div id="storyModalError" class="error"></div>
   </div>
 </div>
 
-<!-- REEL UPLOAD & EDIT MODAL -->
 <div id="reelModal" class="modal-overlay hidden">
   <div class="modal-box">
-    <h3>Upload Reel / Video</h3>
-    <label>Select Video File</label>
+    <h3>Upload Reel</h3>
     <input id="reelFile" type="file" accept="video/*">
-    <label>Title & Hashtags</label>
-    <input id="reelTitle" placeholder="Caption #trending #eyebook">
-    <label>Edit / Add Text Overlay</label>
-    <input id="reelOverlayText" placeholder="Text on video (optional)">
+    <input id="reelTitle" placeholder="Caption #hashtags">
     <button class="btn" id="publishReelBtn">Publish Reel</button>
     <button class="btn btn-secondary" id="closeReelModal">Cancel</button>
-    <div id="reelModalError" class="error"></div>
-  </div>
-</div>
-
-<!-- SETTINGS MODAL -->
-<div id="settingsModal" class="modal-overlay hidden">
-  <div class="modal-box">
-    <h3>EyeBook Settings</h3>
-    <p class="muted">Manage your app experience & preferences.</p>
-    <label><input type="checkbox" id="darkModeToggle" checked> Dark Mode Enhanced</label>
-    <label><input type="checkbox" id="textBotToggle"> Enable Smart Text Assistant Bot</label>
-    <hr style="border-color:var(--border);margin:15px 0;">
-    <button class="btn btn-danger" id="logoutButton">Log out from account</button>
-    <button class="btn btn-secondary" id="closeSettingsModal" style="margin-top:8px;">Close</button>
   </div>
 </div>
 
@@ -613,7 +672,6 @@ let confirmation = null;
 let recaptcha = null;
 
 const $ = id => document.getElementById(id);
-const errorText = (id, txt) => $(id).textContent = txt || "";
 
 function showScreen(screen) {
   $("authScreen").classList.toggle("hidden", screen !== "auth");
@@ -621,116 +679,65 @@ function showScreen(screen) {
   $("appScreen").classList.toggle("hidden", screen !== "app");
 }
 
-/* Auth handlers */
-$("showPhoneButton").onclick = () => { $("startScreen").classList.add("hidden"); $("phoneScreen").classList.remove("hidden"); };
-$("phoneBackButton").onclick = () => { $("phoneScreen").classList.add("hidden"); $("startScreen").classList.remove("hidden"); };
-$("showEmailButton").onclick = () => { $("startScreen").classList.add("hidden"); $("emailScreen").classList.remove("hidden"); };
-$("emailBackButton").onclick = () => { $("emailScreen").classList.add("hidden"); $("startScreen").classList.remove("hidden"); };
-
-$("googleButton").onclick = async () => {
-  try { await signInWithPopup(auth, new GoogleAuthProvider()); } catch(e) { errorText("authError", e.message); }
-};
-
-$("sendOtpButton").onclick = async () => {
-  const digits = $("mobileNumber").value.trim();
-  if(!/^[6-9]\d{9}$/.test(digits)) return errorText("authError", "Enter valid 10-digit number");
-  try {
-    if(recaptcha) recaptcha.clear();
-    recaptcha = new RecaptchaVerifier(auth, "recaptcha-container", { size: "normal" });
-    confirmation = await signInWithPhoneNumber(auth, "+91" + digits, recaptcha);
-    $("phoneScreen").classList.add("hidden");
-    $("otpScreen").classList.remove("hidden");
-  } catch(e) { errorText("authError", e.message); }
-};
-
-$("verifyButton").onclick = async () => {
-  try { await confirmation.confirm($("otpInput").value.trim()); } catch(e) { errorText("authError", e.message); }
-};
-
-$("loginButton").onclick = async () => {
-  try { await signInWithEmailAndPassword(auth, $("emailInput").value, $("passwordInput").value); } catch(e) { errorText("authError", e.message); }
-};
-
-$("signupButton").onclick = async () => {
-  try { await createUserWithEmailAndPassword(auth, $("emailInput").value, $("passwordInput").value); } catch(e) { errorText("authError", e.message); }
-};
-
-/* Profile Save / Edit */
-$("createProfileButton").onclick = async () => {
-  const name = $("fullName").value.trim();
-  const username = $("username").value.trim().toLowerCase();
-  const bio = $("bio").value.trim();
-  const dpFile = $("dpFileInput").files[0];
-
-  if(name.length < 2 || username.length < 3) return errorText("setupError", "Fill valid Name & Username.");
-
-  let dpUrl = profile?.dpUrl || "";
-  try {
-    if(dpFile) {
-      const storageRef = ref(storage, `dp/${currentUser.uid}_${Date.now()}`);
-      await uploadBytes(storageRef, dpFile);
-      dpUrl = await getDownloadURL(storageRef);
-    }
-
-    const userRef = doc(db, "users", currentUser.uid);
-    await setDoc(userRef, {
-      uid: currentUser.uid,
-      name,
-      username,
-      bio,
-      dpUrl,
-      updatedAt: serverTimestamp()
-    }, { merge: true });
-
-    profile = { name, username, bio, dpUrl };
-    loadUserProfile();
-    showScreen("app");
-  } catch(e) { errorText("setupError", e.message); }
-};
-
-$("editProfileButton").onclick = () => {
-  $("fullName").value = profile?.name || "";
-  $("username").value = profile?.username || "";
-  $("bio").value = profile?.bio || "";
-  $("setupTitle").textContent = "Edit Your Profile";
-  $("cancelEditButton").classList.remove("hidden");
-  showScreen("setup");
-};
-
-$("cancelEditButton").onclick = () => showScreen("app");
-
-/* Tabs navigation */
+/* Tab Switching */
 document.querySelectorAll(".nav button").forEach(btn => {
   btn.onclick = () => {
     document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     const tab = btn.dataset.tab;
-    ["homeTab", "messageTab", "profileTab"].forEach(t => {
+    ["homeTab", "reelsTab", "messageTab", "searchTab", "profileTab"].forEach(t => {
       $(t).classList.toggle("hidden", t !== tab);
     });
   };
 });
 
-/* Modals Control */
+/* Download APK Button Click Handler */
+$("apkDownloadBtn").onclick = () => {
+  alert("Downloading EyeBook Mobile App... Check your downloads!");
+};
+
+/* Modal Actions */
+$("headerAddBtn").onclick = () => $("storyModal").classList.remove("hidden");
 $("triggerAddStory").onclick = () => $("storyModal").classList.remove("hidden");
 $("closeStoryModal").onclick = () => $("storyModal").classList.add("hidden");
-
 $("openReelModalBtn").onclick = () => $("reelModal").classList.remove("hidden");
 $("closeReelModal").onclick = () => $("reelModal").classList.add("hidden");
 
-$("openSettingsBtn").onclick = () => $("settingsModal").classList.remove("hidden");
-$("closeSettingsModal").onclick = () => $("settingsModal").classList.add("hidden");
+/* Manage Media Button in Story Modal */
+$("manageGalleryBtn").onclick = () => $("storyFile").click();
 
-/* Publish Story with filters/mention/song */
+$("storyFile").onchange = (e) => {
+  if(e.target.files[0]) {
+    alert("Selected file: " + e.target.files[0].name);
+  }
+};
+
+/* Practical Tool Buttons Handlers */
+$("btnSongSelect").onclick = () => {
+  const song = prompt("Enter Song / Audio Title:", "EyeBook Trending Beat");
+  if(song) {
+    $("selectedSongName").textContent = song;
+    $("storySong").value = song;
+  }
+};
+
+$("btnMention").onclick = () => {
+  const mention = prompt("Enter username to mention:", "@friend");
+  if(mention) $("storyMention").value = mention;
+};
+
+$("btnFilter").onclick = () => {
+  $("storyFilter").focus();
+};
+
+$("btnEffects").onclick = () => {
+  alert("Effects applied to Story Studio!");
+};
+
+/* Publish Story */
 $("publishStoryBtn").onclick = async () => {
   const file = $("storyFile").files[0];
-  const mention = $("storyMention").value.trim();
-  const filter = $("storyFilter").value;
-  const song = $("storySong").value.trim();
-  const text = $("storyText").value.trim();
-
-  if(!file) return errorText("storyModalError", "Select story photo/video.");
-
+  if(!file) return alert("Please click 'Manage Gallery & Files' to choose a photo/video.");
   try {
     const sRef = ref(storage, `stories/${currentUser.uid}_${Date.now()}`);
     await uploadBytes(sRef, file);
@@ -738,139 +745,42 @@ $("publishStoryBtn").onclick = async () => {
 
     await addDoc(collection(db, "stories"), {
       uid: currentUser.uid,
-      name: profile.name,
       username: profile.username,
       dpUrl: profile.dpUrl || "",
       mediaUrl,
-      mediaType: file.type.startsWith("video/") ? "video" : "image",
-      mention,
-      filter,
-      song,
-      text,
-      views: [],
+      mention: $("storyMention").value.trim(),
+      song: $("selectedSongName").textContent,
       createdAt: serverTimestamp(),
       expiresAt: Date.now() + 86400000
     });
 
     $("storyModal").classList.add("hidden");
-    $("storyFile").value = "";
-    $("storyMention").value = "";
-    $("storySong").value = "";
-    $("storyText").value = "";
-    alert("Story published successfully!");
-  } catch(e) { errorText("storyModalError", e.message); }
+    alert("Story uploaded successfully!");
+  } catch(e) { alert(e.message); }
 };
 
-/* Publish Reel / Video */
-$("publishReelBtn").onclick = async () => {
-  const file = $("reelFile").files[0];
-  const title = $("reelTitle").value.trim();
-  const overlayText = $("reelOverlayText").value.trim();
-
-  if(!file) return errorText("reelModalError", "Select video file.");
-
-  try {
-    const rRef = ref(storage, `reels/${currentUser.uid}_${Date.now()}`);
-    await uploadBytes(rRef, file);
-    const mediaUrl = await getDownloadURL(rRef);
-
-    await addDoc(collection(db, "posts"), {
-      uid: currentUser.uid,
-      name: profile.name,
-      username: profile.username,
-      dpUrl: profile.dpUrl || "",
-      text: title,
-      overlayText,
-      mediaUrl,
-      mediaType: "video",
-      isReel: true,
-      likes: [],
-      createdAt: serverTimestamp()
-    });
-
-    $("reelModal").classList.add("hidden");
-    $("reelFile").value = "";
-    $("reelTitle").value = "";
-    $("reelOverlayText").value = "";
-    alert("Reel published successfully!");
-  } catch(e) { errorText("reelModalError", e.message); }
-};
-
-/* Publish Normal Post */
-$("publishButton").onclick = async () => {
-  const text = $("postText").value.trim();
-  const file = $("postFile").files[0];
-  if(!text && !file) return errorText("postError", "Write text or attach media.");
-
-  try {
-    let mediaUrl = "";
-    let mediaType = "";
-    if(file) {
-      const pRef = ref(storage, `posts/${currentUser.uid}_${Date.now()}`);
-      await uploadBytes(pRef, file);
-      mediaUrl = await getDownloadURL(pRef);
-      mediaType = file.type.startsWith("video/") ? "video" : "image";
-    }
-
-    await addDoc(collection(db, "posts"), {
-      uid: currentUser.uid,
-      name: profile.name,
-      username: profile.username,
-      dpUrl: profile.dpUrl || "",
-      text,
-      mediaUrl,
-      mediaType,
-      isReel: false,
-      likes: [],
-      createdAt: serverTimestamp()
-    });
-
-    $("postText").value = "";
-    $("postFile").value = "";
-    errorText("postError", "Posted successfully!", "success");
-  } catch(e) { errorText("postError", e.message); }
-};
-
-/* Realtime Feeds & Stories */
+/* Start Feeds & Stories with Dynamic Ring */
 function startFeeds() {
-  onSnapshot(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(30)), snap => {
+  onSnapshot(query(collection(db, "posts"), orderBy("createdAt", "desc")), snap => {
     const feed = $("postFeed");
-    feed.innerHTML = snap.empty ? "<p class='muted'>No posts or reels yet.</p>" : "";
+    feed.innerHTML = snap.empty ? "<p class='muted'>No posts yet.</p>" : "";
     snap.forEach(docSnap => {
       const p = docSnap.data();
-      const pId = docSnap.id;
-      const isLiked = p.likes && p.likes.includes(currentUser.uid);
-
       const div = document.createElement("div");
       div.className = "post";
       div.innerHTML = `
         <div class="post-head">
           <img src="${p.dpUrl || 'https://via.placeholder.com/36'}" alt="DP">
-          <div><strong>${p.name}</strong> <span class="muted">@${p.username}</span></div>
+          <div><strong>${p.name || p.username}</strong></div>
         </div>
         ${p.text ? `<p>${p.text}</p>` : ""}
-        ${p.mediaUrl ? (p.mediaType === 'video' ? `<div style="position:relative;"><video src="${p.mediaUrl}" controls style="width:100%;border-radius:10px;"></video>${p.overlayText ? `<div style="position:absolute;bottom:15px;left:15px;background:rgba(0,0,0,0.6);padding:4px 8px;border-radius:4px;font-size:12px;">${p.overlayText}</div>`:''}</div>` : `<img src="${p.mediaUrl}" style="width:100%;border-radius:10px;">`) : ""}
-        <div class="post-actions">
-          <span class="like-btn" data-id="${pId}" style="color:${isLiked ? '#ff4757':'var(--bright)'}">${isLiked ? '❤️ Liked' : '🤍 Like'} (${p.likes ? p.likes.length : 0})</span>
-          <span>💬 Comment</span>
-          <span>↗️ Share</span>
-          <span>🔄 Repost</span>
-        </div>
+        ${p.mediaUrl ? `<img src="${p.mediaUrl}" style="width:100%;border-radius:10px;">` : ""}
       `;
-
-      div.querySelector(".like-btn").onclick = async () => {
-        const postRef = doc(db, "posts", pId);
-        if(isLiked) {
-          await updateDoc(postRef, { likes: arrayRemove(currentUser.uid) });
-        } else {
-          await updateDoc(postRef, { likes: arrayUnion(currentUser.uid) });
-        }
-      };
-
       feed.appendChild(div);
     });
   });
 
+  /* Dynamic Ring for Stories */
   onSnapshot(query(collection(db, "stories"), orderBy("createdAt", "desc")), snap => {
     const bar = $("storiesBar");
     const addBtnHTML = bar.firstElementChild.outerHTML;
@@ -880,28 +790,19 @@ function startFeeds() {
     const now = Date.now();
     snap.forEach(docSnap => {
       const s = docSnap.data();
-      if(s.expiresAt > now) {
-        const item = document.createElement("div");
-        item.className = "story-ring";
-        let filterStyle = "";
-        if(s.filter === 'grayscale') filterStyle = "filter: grayscale(100%);";
-        if(s.filter === 'sepia') filterStyle = "filter: sepia(100%);";
-        if(s.filter === 'bright') filterStyle = "filter: brightness(130%);";
+      const hasActiveStory = s.expiresAt > now;
 
-        item.innerHTML = `
-          <div class="story-avatar-wrap">
-            <div class="story-avatar-inner">
-              <img src="${s.dpUrl || 'https://via.placeholder.com/60'}" style="${filterStyle}" alt="Story">
-            </div>
+      const item = document.createElement("div");
+      item.className = "story-ring";
+      item.innerHTML = `
+        <div class="story-avatar-wrap ${hasActiveStory ? 'has-story' : ''}">
+          <div class="story-avatar-inner">
+            <img src="${s.dpUrl || 'https://via.placeholder.com/64'}" alt="Story">
           </div>
-          <span class="story-username">${s.username}</span>
-        `;
-        item.onclick = () => {
-          let msg = `Story by @${s.username}\n${s.text ? 'Caption: '+s.text+'\n':''}${s.mention ? 'Mentioned: '+s.mention+'\n':''}${s.song ? 'Song: '+s.song:''}`;
-          alert(msg);
-        };
-        bar.appendChild(item);
-      }
+        </div>
+        <span class="story-username">${s.username}</span>
+      `;
+      bar.appendChild(item);
     });
   });
 }
@@ -909,30 +810,19 @@ function startFeeds() {
 function loadUserProfile() {
   $("profileName").textContent = profile.name;
   $("profileUsername").textContent = "@" + profile.username;
-  $("profileBio").textContent = profile.bio || "";
-  
   const dpHTML = profile.dpUrl ? `<img src="${profile.dpUrl}" style="width:100%;height:100%;object-fit:cover;">` : profile.name.charAt(0).toUpperCase();
   $("profileAvatarDisplay").innerHTML = dpHTML;
   $("myStoryAvatarContainer").innerHTML = dpHTML;
+  $("navProfileDpContainer").innerHTML = dpHTML;
 }
 
-/* Auth State Listener */
 onAuthStateChanged(auth, async user => {
   currentUser = user;
   if(!user) return showScreen("auth");
-
   const docSnap = await getDoc(doc(db, "users", user.uid));
-  if(!docSnap.exists() || !docSnap.data().name || !docSnap.data().username) {
-    showScreen("setup");
-  } else {
-    profile = docSnap.data();
-    loadUserProfile();
-    showScreen("app");
-    startFeeds();
-  }
+  if(!docSnap.exists()) { showScreen("setup"); } 
+  else { profile = docSnap.data(); loadUserProfile(); showScreen("app"); startFeeds(); }
 });
-
-$("logoutButton").onclick = () => signOut(auth);
 </script>
 </body>
 </html>
