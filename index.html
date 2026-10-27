@@ -27,9 +27,7 @@ html{scroll-behavior:smooth}
 body{
   margin:0;
   min-height:100vh;
-  background:
-    radial-gradient(ellipse at top,#103d29 0%,transparent 43%),
-    var(--bg);
+  background:radial-gradient(ellipse at top,#103d29 0%,transparent 43%),var(--bg);
   color:var(--text);
   font-family:system-ui,-apple-system,Arial,sans-serif;
 }
@@ -39,13 +37,6 @@ button{cursor:pointer}
 button:disabled{opacity:.55;cursor:wait}
 .hidden{display:none!important}
 
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible{
-  outline:2px solid var(--bright);
-  outline-offset:3px;
-}
-
 .header{
   position:sticky;
   top:0;
@@ -54,8 +45,8 @@ textarea:focus-visible{
   align-items:center;
   justify-content:space-between;
   gap:10px;
-  padding:12px 15px;
-  min-height:76px;
+  padding:10px 15px;
+  min-height:65px;
   background:rgba(4,19,12,.96);
   border-bottom:1px solid rgba(93,226,156,.2);
   backdrop-filter:blur(18px);
@@ -64,13 +55,13 @@ textarea:focus-visible{
 .brand{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:8px;
   cursor:pointer;
 }
 
 .logo{
-  width:49px;
-  height:49px;
+  width:38px;
+  height:38px;
   flex-shrink:0;
   display:grid;
   place-items:center;
@@ -78,65 +69,70 @@ textarea:focus-visible{
 
 .logo svg{width:100%;height:100%}
 
+.brand-name-wrap{
+  display:flex;
+  flex-direction:column;
+}
+
 .brand-name{
-  display:block;
-  font-size:25px;
+  font-size:20px;
   font-weight:950;
   letter-spacing:-1px;
   background:linear-gradient(100deg,#edfff5,#71ffc0 48%,#16c783);
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
+  line-height:1;
 }
 
-.brand-tagline{
-  display:block;
-  margin-top:4px;
-  color:#a2cbb3;
-  font-size:9px;
+.brand-sub{
+  font-size:7px;
   font-weight:800;
-  letter-spacing:1.4px;
+  color:#a2cbb3;
+  letter-spacing:1px;
+  margin-top:2px;
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.icon-btn{
+  background:transparent;
+  border:none;
+  color:var(--text);
+  font-size:20px;
+  padding:5px;
 }
 
 main{
-  width:min(760px,100%);
+  width:min(600px,100%);
   margin:auto;
-  padding:18px 13px 45px;
-}
-
-.hero{text-align:center;padding:30px 8px}
-.hero-name{
-  font-size:clamp(45px,10vw,68px);
-  font-weight:1000;
-  letter-spacing:-3px;
-  line-height:1.1;
-  background:linear-gradient(110deg,#e4fff0,#64f5ae 45%,#12b878);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+  padding:12px 10px 75px;
 }
 
 .card{
-  padding:20px;
-  margin-bottom:15px;
+  padding:16px;
+  margin-bottom:12px;
   border:1px solid var(--border);
-  border-radius:20px;
+  border-radius:16px;
   background:linear-gradient(145deg,rgba(18,46,32,.98),rgba(10,29,20,.98));
-  box-shadow:0 12px 32px rgba(0,0,0,.12);
+  box-shadow:0 8px 24px rgba(0,0,0,.15);
 }
 
-h1,h2,h3{margin-top:0}
-h2{font-size:23px;letter-spacing:-.5px}
-h3{font-size:18px}
-p{line-height:1.55}
-.muted{color:var(--muted);font-size:13px}
+h2{font-size:18px;margin-top:0}
+h3{font-size:15px;margin-top:0}
+p{line-height:1.5}
+.muted{color:var(--muted);font-size:12px}
 
 .btn{
   width:100%;
-  padding:13px;
-  margin-top:10px;
+  padding:11px;
+  margin-top:8px;
   border:1px solid transparent;
-  border-radius:12px;
+  border-radius:10px;
   color:white;
   background:linear-gradient(110deg,#128553,#20bf7c);
   font-weight:800;
@@ -156,169 +152,205 @@ p{line-height:1.55}
 
 label{
   display:block;
-  margin:12px 0 6px;
+  margin:10px 0 4px;
   color:#c9e5d3;
-  font-size:13px;
+  font-size:12px;
   font-weight:700;
 }
 
-input,textarea{
+input,textarea,select{
   display:block;
   width:100%;
-  padding:12px;
-  margin:0 0 10px;
+  padding:10px;
+  margin:0 0 8px;
   border:1px solid #315741;
-  border-radius:11px;
+  border-radius:10px;
   background:#071b11;
   color:white;
 }
 
-input:focus,textarea:focus{
+input:focus,textarea:focus,select:focus{
   border-color:#36e79a;
   outline:none;
 }
 
-textarea{min-height:90px;resize:vertical}
+textarea{min-height:80px;resize:vertical}
 
-.row{display:flex;align-items:center;gap:9px}
-.row .grow{flex:1;min-width:0}
+/* Instagram Style Stories Bar */
+.stories-container{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:4px 4px 12px;
+  margin-bottom:10px;
+  scrollbar-width:none;
+}
+.stories-container::-webkit-scrollbar{display:none}
 
-.country-code{
+.story-ring{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  cursor:pointer;
   flex-shrink:0;
-  background:#17392a;
-  border:1px solid var(--border);
-  padding:12px;
-  border-radius:11px;
+  width:68px;
 }
 
-#recaptcha-container{margin:12px 0;overflow-x:auto}
+.story-avatar-wrap{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  padding:2.5px;
+  background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+  position:relative;
+}
+
+.story-avatar-inner{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  background:#0d2118;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  border:2px solid var(--bg);
+}
+
+.story-avatar-inner img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.story-add-badge{
+  position:absolute;
+  bottom:0;
+  right:0;
+  background:#18b777;
+  color:white;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:13px;
+  font-weight:bold;
+  border:2px solid var(--bg);
+}
+
+.story-username{
+  font-size:11px;
+  margin-top:4px;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  width:100%;
+}
+
+/* Stunning Icon-Only Bottom Navigation Bar */
+.nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:rgba(6,19,14,0.98);
+  border-top:1px solid var(--border);
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  padding:10px 0;
+  z-index:100;
+  backdrop-filter:blur(10px);
+}
+
+.nav button{
+  background:transparent;
+  border:none;
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 24px;
+  border-radius:12px;
+  transition:0.2s ease;
+}
+
+.nav button.active{
+  color:var(--bright);
+  background:rgba(24,183,119,0.15);
+  box-shadow:0 0 15px rgba(118,255,192,0.2);
+}
+
+.nav button svg{
+  width:26px;
+  height:26px;
+  fill:currentColor;
+}
+
+.avatar-large{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--bright);
+  background:#123d29;
+  display:grid;
+  place-items:center;
+  font-size:30px;
+  font-weight:bold;
+  overflow:hidden;
+}
+
+.post{
+  padding:14px;
+  margin-bottom:12px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--card);
+}
+
+.post-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.post-head img, .post-head .avatar-sm{width:36px;height:36px;border-radius:50%;object-fit:cover}
+
+.post-actions{
+  display:flex;
+  gap:15px;
+  margin-top:10px;
+  font-size:14px;
+  font-weight:bold;
+  color:var(--bright);
+}
+
+.post-actions span{cursor:pointer}
 
 .error{
-  margin-top:10px;
+  margin-top:8px;
   color:var(--danger);
-  font-size:13px;
-  overflow-wrap:anywhere;
+  font-size:12px;
   white-space:pre-wrap;
 }
 
 .success{color:var(--bright)}
 
-.nav{
-  display:flex;
-  gap:7px;
-  margin-bottom:16px;
-}
-
-.nav button{
-  flex:1;
-  padding:11px 4px;
-  border:1px solid var(--border);
-  border-radius:11px;
-  background:var(--surface);
-  color:var(--muted);
-  font-size:12px;
-  font-weight:800;
-}
-
-.nav button.active{
-  background:linear-gradient(110deg,#126a43,#15965d);
-  border-color:#45d996;
-  color:white;
-}
-
-.profile-row{display:flex;align-items:center;gap:12px}
-
-.avatar{
-  width:49px;
-  height:49px;
-  flex:0 0 49px;
+/* Modal Styles */
+.modal-overlay{
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.85);
+  z-index:200;
   display:grid;
   place-items:center;
-  border:1px solid #54dfa0;
-  border-radius:50%;
-  background:linear-gradient(145deg,#36d995,#087148);
-  color:white;
-  font-size:21px;
-  font-weight:900;
-}
-
-.post{
   padding:15px;
-  margin-bottom:13px;
+}
+.modal-box{
+  width:min(450px,100%);
+  background:var(--surface);
   border:1px solid var(--border);
   border-radius:16px;
-  background:var(--card);
-  overflow-wrap:anywhere;
-}
-
-.post-head{display:flex;align-items:center;gap:10px}
-.post-head .avatar{width:39px;height:39px;flex-basis:39px;font-size:17px}
-.post-text{white-space:pre-wrap;overflow-wrap:anywhere}
-
-.post-media{
-  display:block;
-  width:100%;
-  max-width:100%;
-  max-height:550px;
-  object-fit:contain;
-  margin-top:12px;
-  border-radius:11px;
-  background:#000;
-}
-
-.post-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  padding-top:11px;
-  margin-top:11px;
-  border-top:1px solid var(--border);
-}
-
-.post-actions button{
-  padding:9px 12px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  background:#17392a;
-  color:white;
-}
-
-.metric{
-  color:var(--bright);
-  font-size:29px;
-  font-weight:900;
-}
-
-.badge{
-  display:inline-block;
-  padding:4px 9px;
-  border:1px solid #286a49;
-  border-radius:30px;
-  background:#123d29;
-  color:#b7fbd4;
-  font-size:11px;
-}
-
-.user-result{
-  padding:12px 0;
-  border-bottom:1px solid var(--border);
-}
-
-footer{
-  padding:22px 10px;
-  text-align:center;
-  color:#83a994;
-  font-size:12px;
-}
-
-@media(max-width:430px){
-  .header{padding:9px}
-  .logo{width:42px;height:42px}
-  .brand{gap:7px}
-  .brand-name{font-size:22px}
-  .brand-tagline{font-size:7px;letter-spacing:1px}
-  main{padding-left:10px;padding-right:10px}
-  .card{padding:16px}
+  padding:20px;
+  max-height:90vh;
+  overflow-y:auto;
 }
 </style>
 </head>
@@ -326,45 +358,44 @@ footer{
 <body>
 
 <header class="header">
-  <div class="brand" id="brandHome" role="button" tabindex="0">
+  <div class="brand" id="brandHome">
     <span class="logo">
-      <svg viewBox="0 0 100 70" aria-label="EyeBook eye logo">
+      <svg viewBox="0 0 100 70" aria-label="EyeBook logo">
         <defs>
-          <linearGradient id="eyeGradient" x1="0" x2="1" y1="0" y2="1">
+          <linearGradient id="eyeGrad" x1="0" x2="1" y1="0" y2="1">
             <stop offset="0%" stop-color="#76ffc0"/>
             <stop offset="100%" stop-color="#18b777"/>
           </linearGradient>
         </defs>
-        <path d="M5 35 Q50 -8 95 35 Q50 78 5 35Z"
-              fill="#0d2118" stroke="url(#eyeGradient)" stroke-width="6"/>
-        <circle cx="50" cy="35" r="19" fill="url(#eyeGradient)"/>
+        <path d="M5 35 Q50 -8 95 35 Q50 78 5 35Z" fill="#0d2118" stroke="url(#eyeGrad)" stroke-width="6"/>
+        <circle cx="50" cy="35" r="19" fill="url(#eyeGrad)"/>
         <circle cx="50" cy="35" r="9" fill="#06130e"/>
         <circle cx="57" cy="27" r="4" fill="#ffffff"/>
       </svg>
     </span>
-    <span>
+    <div class="brand-name-wrap">
       <span class="brand-name">EyeBook</span>
-      <span class="brand-tagline">CONNECT YOUR WORLD</span>
-    </span>
+      <span class="brand-sub">CONNECT YOUR WORLD</span>
+    </div>
   </div>
-
-  <button id="logoutButton" class="btn-secondary hidden"
-          style="padding:9px 10px;border-radius:10px">
-    Log out
-  </button>
+  <div class="header-actions">
+    <button class="icon-btn" id="openReelModalBtn" title="Upload Reel">➕🎬</button>
+    <button class="icon-btn" id="openSettingsBtn" title="Settings">☰</button>
+  </div>
 </header>
 
+<!-- Auth Screen -->
 <section id="authScreen">
   <main>
-    <div class="hero">
-      <div class="hero-name">EyeBook</div>
+    <div style="text-align:center;padding:25px 0;">
+      <h1 style="font-size:38px;font-weight:1000;background:linear-gradient(110deg,#e4fff0,#64f5ae 45%,#12b878);-webkit-background-clip:text;background-clip:text;color:transparent;">EyeBook</h1>
       <p class="muted">Connect. Share. Discover.</p>
     </div>
 
     <div class="card">
       <div id="startScreen">
         <h2>Welcome to EyeBook</h2>
-        <p class="muted">Connect with people and share your world.</p>
+        <p class="muted">Connect with people securely.</p>
         <button class="btn" id="showPhoneButton">Continue with Mobile</button>
         <button class="btn btn-secondary" id="showEmailButton">Continue with Email</button>
         <button class="btn btn-secondary" id="googleButton">Continue with Google</button>
@@ -372,194 +403,195 @@ footer{
 
       <div id="phoneScreen" class="hidden">
         <h3>Mobile Login</h3>
-        <label for="mobileNumber">Indian mobile number</label>
-        <div class="row">
-          <span class="country-code">+91</span>
-          <input id="mobileNumber" type="tel" inputmode="numeric"
-                 maxlength="10" placeholder="10-digit mobile number">
+        <label>Indian Mobile Number</label>
+        <div style="display:flex;gap:8px;">
+          <span style="background:#17392a;padding:10px;border:1px solid var(--border);border-radius:10px;">+91</span>
+          <input id="mobileNumber" type="tel" maxlength="10" placeholder="10-digit number">
         </div>
-        <div id="recaptcha-container"></div>
+        <div id="recaptcha-container" style="margin:10px 0;"></div>
         <button class="btn" id="sendOtpButton">Send OTP</button>
         <button class="btn btn-secondary" id="phoneBackButton">Back</button>
       </div>
 
       <div id="otpScreen" class="hidden">
-        <h3>Verify Your Number</h3>
-        <p id="otpMessage" class="muted">Enter the SMS code.</p>
-        <input id="otpInput" type="text" inputmode="numeric"
-               autocomplete="one-time-code" maxlength="6"
-               placeholder="6-digit OTP">
-        <button class="btn" id="verifyButton">Verify OTP</button>
+        <h3>Verify OTP</h3>
+        <p id="otpMessage" class="muted">Enter 6-digit code</p>
+        <input id="otpInput" type="text" maxlength="6" placeholder="OTP Code">
+        <button class="btn" id="verifyButton">Verify & Login</button>
         <button class="btn btn-secondary" id="changeNumberButton">Change Number</button>
       </div>
 
       <div id="emailScreen" class="hidden">
         <h3>Email Login</h3>
-        <label for="emailInput">Email</label>
-        <input id="emailInput" type="email" autocomplete="email"
-               placeholder="Email address">
-        <label for="passwordInput">Password</label>
-        <input id="passwordInput" type="password" minlength="6"
-               autocomplete="current-password" placeholder="At least 6 characters">
+        <label>Email</label>
+        <input id="emailInput" type="email" placeholder="Email address">
+        <label>Password</label>
+        <input id="passwordInput" type="password" placeholder="Password (min 6 chars)">
         <button class="btn" id="loginButton">Log In</button>
         <button class="btn btn-secondary" id="signupButton">Create Account</button>
-        <button class="btn btn-secondary" id="resetButton">Forgot Password?</button>
         <button class="btn btn-secondary" id="emailBackButton">Back</button>
       </div>
 
-      <div id="authError" class="error" role="status" aria-live="polite"></div>
+      <div id="authError" class="error"></div>
     </div>
   </main>
 </section>
 
+<!-- Profile Setup / Edit Screen -->
 <section id="setupScreen" class="hidden">
   <main>
     <div class="card">
-      <h2 id="setupTitle">Create Your EyeBook ID</h2>
-      <p class="muted">Choose your display name and unique username.</p>
+      <h2 id="setupTitle">Complete Your Profile</h2>
+      <p class="muted">Set your name, username and profile picture (DP).</p>
 
-      <label for="fullName">Your Name</label>
-      <input id="fullName" maxlength="60" placeholder="Your name">
+      <label>Profile Picture (DP)</label>
+      <input id="dpFileInput" type="file" accept="image/*">
 
-      <label for="username">Username</label>
-      <input id="username" maxlength="24" autocapitalize="none"
-             placeholder="e.g. ayaan123">
+      <label>Your Name</label>
+      <input id="fullName" maxlength="50" placeholder="Full name">
 
-      <label for="bio">About You</label>
-      <textarea id="bio" maxlength="250" placeholder="Write a short bio"></textarea>
+      <label>Username</label>
+      <input id="username" maxlength="20" placeholder="e.g. ayaan_babu">
 
-      <button class="btn" id="createProfileButton">Create My ID</button>
+      <label>Bio</label>
+      <textarea id="bio" maxlength="150" placeholder="Write something about yourself"></textarea>
+
+      <button class="btn" id="createProfileButton">Save Profile</button>
       <button class="btn btn-secondary hidden" id="cancelEditButton">Cancel</button>
-      <div id="setupError" class="error" role="status"></div>
+      <div id="setupError" class="error"></div>
     </div>
   </main>
 </section>
 
+<!-- Main App Screen -->
 <section id="appScreen" class="hidden">
   <main>
-    <nav class="nav">
-      <button class="active" data-tab="homeTab">Home</button>
-      <button data-tab="storiesTab">Stories</button>
-      <button data-tab="searchTab">Search</button>
-      <button data-tab="profileTab">Profile</button>
-      <button data-tab="earningsTab">Earnings</button>
-    </nav>
-
-    <section id="homeTab">
-      <div class="card">
-        <h2>Welcome to EyeBook 🌿</h2>
-        <p class="muted">Your world. Your people. Your stories.</p>
-      </div>
-
-      <div class="card">
-        <h3>Create a Post</h3>
-        <textarea id="postText" maxlength="3000"
-                  placeholder="What's on your mind?"></textarea>
-        <label for="postFile">Photo or video</label>
-        <input id="postFile" type="file" accept="image/*,video/*">
-        <p class="muted">Maximum file size: 10 MB.</p>
-        <button class="btn" id="publishButton">Publish Post</button>
-        <div id="postError" class="error" role="status"></div>
-      </div>
-
-      <h3>Latest Posts</h3>
-      <div id="postFeed"><p class="muted">Loading posts...</p></div>
-    </section>
-
-    <section id="storiesTab" class="hidden">
-      <div class="card">
-        <h2>Stories</h2>
-        <p class="muted">Stories are visible for 24 hours.</p>
-        <textarea id="storyText" maxlength="500" placeholder="Write a short story"></textarea>
-        <button class="btn" id="publishStoryButton">Share Story</button>
-        <div id="storyError" class="error"></div>
-      </div>
-      <div class="card">
-        <h3>Recent Stories</h3>
-        <div id="storyFeed"><p class="muted">No stories loaded.</p></div>
-      </div>
-    </section>
-
-    <section id="searchTab" class="hidden">
-      <div class="card">
-        <h2>Discover People</h2>
-        <input id="searchInput" maxlength="60" placeholder="Search username or name">
-        <button class="btn" id="searchButton">Search</button>
-        <div id="searchResults"></div>
-      </div>
-    </section>
-
-    <section id="profileTab" class="hidden">
-      <div class="card">
-        <div class="profile-row">
-          <div class="avatar" id="profileAvatar">E</div>
-          <div>
-            <h2 id="profileName">My Profile</h2>
-            <p id="profileUsername" class="muted"></p>
-          </div>
+    
+    <!-- Stories Bar -->
+    <div class="stories-container" id="storiesBar">
+      <div class="story-ring" id="triggerAddStory">
+        <div class="story-avatar-wrap">
+          <div class="story-avatar-inner" id="myStoryAvatarContainer">E</div>
+          <div class="story-add-badge">+</div>
         </div>
+        <span class="story-username">Your Story</span>
+      </div>
+    </div>
+
+    <!-- Home Tab -->
+    <div id="homeTab" class="tab-content">
+      <div class="card">
+        <h3>Create Post</h3>
+        <textarea id="postText" placeholder="What's on your mind?"></textarea>
+        <label>Add Photo / Video</label>
+        <input id="postFile" type="file" accept="image/*,video/*">
+        <button class="btn" id="publishButton">Publish Post</button>
+        <div id="postError" class="error"></div>
+      </div>
+      <h3>Feeds & Reels</h3>
+      <div id="postFeed"><p class="muted">Loading posts...</p></div>
+    </div>
+
+    <!-- Message / Chat Tab -->
+    <div id="messageTab" class="tab-content hidden">
+      <div class="card">
+        <h2>Messages</h2>
+        <p class="muted">Direct chats and updates with your connections.</p>
+        <div style="padding:30px 0;text-align:center;" class="muted">No direct messages yet. Search users to start chatting!</div>
+      </div>
+    </div>
+
+    <!-- Profile Tab -->
+    <div id="profileTab" class="tab-content hidden">
+      <div class="card" style="text-align:center;">
+        <div style="display:flex;justify-content:center;margin-bottom:10px;">
+          <div class="avatar-large" id="profileAvatarDisplay">E</div>
+        </div>
+        <h2 id="profileName">Name</h2>
+        <p id="profileUsername" class="muted">@username</p>
         <p id="profileBio"></p>
-        <p id="profileEmail" class="muted"></p>
-        <p id="profilePhone" class="muted"></p>
-        <button class="btn btn-secondary" id="editProfileButton">Edit Profile</button>
+        <button class="btn btn-secondary" id="editProfileButton">Edit Profile & DP</button>
       </div>
-    </section>
+    </div>
 
-    <section id="earningsTab" class="hidden">
-      <div class="card">
-        <h2>Creator Earnings</h2>
-        <span class="badge">Dashboard preview</span>
-        <p class="muted">
-          This page does not create real advertising revenue.
-          Verified earnings must come from an approved ad provider.
-        </p>
-        <div class="metric">₹0.00</div>
-        <p class="muted">Verified earnings have not been connected.</p>
-        <hr style="border-color:#244936">
-        <h3>Payment History</h3>
-        <p class="muted">No verified payments connected.</p>
-        <button class="btn btn-secondary" id="paymentInfoButton">Payment Information</button>
-        <p id="paymentInfoText" class="muted"></p>
-      </div>
-
-      <div class="card">
-        <h3>Download EyeBook APK</h3>
-        <p class="muted">
-          This button needs a real APK URL. It cannot build an APK from this HTML file.
-        </p>
-        <a id="apkDownloadLink" href="#" class="hidden" download>
-          <button class="btn" type="button">Download APK</button>
-        </a>
-        <button class="btn btn-secondary" id="apkInfoButton">
-          APK Download Information
-        </button>
-        <p id="apkInfoText" class="muted"></p>
-      </div>
-    </section>
   </main>
+
+  <!-- Stunning Icon-Only Bottom Navigation Bar -->
+  <nav class="nav">
+    <!-- Home Icon (Green glowing house) -->
+    <button class="active" data-tab="homeTab" title="Home">
+      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </button>
+    <!-- Message Icon (Middle) -->
+    <button data-tab="messageTab" title="Messages">
+      <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+    </button>
+    <!-- Profile Icon (Right) -->
+    <button data-tab="profileTab" title="Profile">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    </button>
+  </nav>
 </section>
 
-<footer>EyeBook · Connect your world</footer>
+<!-- STORY CREATOR MODAL -->
+<div id="storyModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3>Create Story (Instagram Style)</h3>
+    <label>Select Photo/Video</label>
+    <input id="storyFile" type="file" accept="image/*,video/*">
+    <label>Add Mention (@username)</label>
+    <input id="storyMention" placeholder="@friend">
+    <label>Add Filter / Effect style</label>
+    <select id="storyFilter">
+      <option value="normal">Normal</option>
+      <option value="grayscale">Black & White</option>
+      <option value="sepia">Vintage Sepia</option>
+      <option value="bright">Super Bright</option>
+    </select>
+    <label>Add Background Song Name</label>
+    <input id="storySong" placeholder="Song title - Artist">
+    <label>Caption / Text</label>
+    <input id="storyText" maxlength="100" placeholder="Write on story">
+    <button class="btn" id="publishStoryBtn">Share Story</button>
+    <button class="btn btn-secondary" id="closeStoryModal">Cancel</button>
+    <div id="storyModalError" class="error"></div>
+  </div>
+</div>
+
+<!-- REEL UPLOAD & EDIT MODAL -->
+<div id="reelModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3>Upload Reel / Video</h3>
+    <label>Select Video File</label>
+    <input id="reelFile" type="file" accept="video/*">
+    <label>Title & Hashtags</label>
+    <input id="reelTitle" placeholder="Caption #trending #eyebook">
+    <label>Edit / Add Text Overlay</label>
+    <input id="reelOverlayText" placeholder="Text on video (optional)">
+    <button class="btn" id="publishReelBtn">Publish Reel</button>
+    <button class="btn btn-secondary" id="closeReelModal">Cancel</button>
+    <div id="reelModalError" class="error"></div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div id="settingsModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3>EyeBook Settings</h3>
+    <p class="muted">Manage your app experience & preferences.</p>
+    <label><input type="checkbox" id="darkModeToggle" checked> Dark Mode Enhanced</label>
+    <label><input type="checkbox" id="textBotToggle"> Enable Smart Text Assistant Bot</label>
+    <hr style="border-color:var(--border);margin:15px 0;">
+    <button class="btn btn-danger" id="logoutButton">Log out from account</button>
+    <button class="btn btn-secondary" id="closeSettingsModal" style="margin-top:8px;">Close</button>
+  </div>
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-
-import {
-  getAuth, onAuthStateChanged, RecaptchaVerifier,
-  signInWithPhoneNumber, GoogleAuthProvider, signInWithPopup,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  sendPasswordResetEmail, signOut, updateProfile
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
-import {
-  getFirestore, doc, getDoc, setDoc, collection, addDoc,
-  getDocs, query, orderBy, limit, serverTimestamp,
-  onSnapshot, runTransaction, deleteDoc
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-
-import {
-  getStorage, ref, uploadBytes, getDownloadURL
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
+import { getAuth, onAuthStateChanged, RecaptchaVerifier, signInWithPhoneNumber, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, collection, addDoc, query, orderBy, limit, serverTimestamp, onSnapshot, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyARJlmwpKVoEKmMLTy0ddDnE2lMQEKZKts",
@@ -567,470 +599,216 @@ const firebaseConfig = {
   projectId: "eyebook-7885f-78d46",
   storageBucket: "eyebook-7885f-78d46.firebasestorage.app",
   messagingSenderId: "1059176010742",
-  appId: "1:1059176010742:web:b24a7a9dafa2f8962eadd7",
-  measurementId: "G-JC2H7X4DB9"
+  appId: "1:297441359052:web:3aa43bbd674731f6143e69"
 };
 
-const APK_DOWNLOAD_URL = "";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-const $ = id => document.getElementById(id);
-
-let auth = null;
-let db = null;
-let storage = null;
 let currentUser = null;
 let profile = null;
 let confirmation = null;
 let recaptcha = null;
-let feedUnsubscribe = null;
-let storiesUnsubscribe = null;
-let authReady = false;
-let authOperation = 0;
-let editingProfile = false;
 
-function errorText(id, text = "") {
-  $(id).textContent = text;
+const $ = id => document.getElementById(id);
+const errorText = (id, txt) => $(id).textContent = txt || "";
+
+function showScreen(screen) {
+  $("authScreen").classList.toggle("hidden", screen !== "auth");
+  $("setupScreen").classList.toggle("hidden", screen !== "setup");
+  $("appScreen").classList.toggle("hidden", screen !== "app");
 }
 
-function busy(id, state, label = "Please wait...") {
-  const button = $(id);
-  if (!button) return;
+/* Auth handlers */
+$("showPhoneButton").onclick = () => { $("startScreen").classList.add("hidden"); $("phoneScreen").classList.remove("hidden"); };
+$("phoneBackButton").onclick = () => { $("phoneScreen").classList.add("hidden"); $("startScreen").classList.remove("hidden"); };
+$("showEmailButton").onclick = () => { $("startScreen").classList.add("hidden"); $("emailScreen").classList.remove("hidden"); };
+$("emailBackButton").onclick = () => { $("emailScreen").classList.add("hidden"); $("startScreen").classList.remove("hidden"); };
 
-  if (state) {
-    if (!button.disabled) button.dataset.oldText = button.textContent;
-    button.disabled = true;
-    button.textContent = label;
-  } else {
-    button.disabled = false;
-    if (button.dataset.oldText) {
-      button.textContent = button.dataset.oldText;
-      delete button.dataset.oldText;
-    }
-  }
-}
-
-function firebaseError(error) {
-  const code = error?.code || "";
-  const messages = {
-    "auth/invalid-api-key": "Invalid API key. Check your Firebase project configuration.",
-    "auth/operation-not-allowed": "Enable this sign-in method in Firebase Authentication.",
-    "auth/unauthorized-domain": "Add your website hostname in Firebase Authentication > Settings > Authorized domains.",
-    "auth/invalid-phone-number": "Enter a valid Indian mobile number.",
-    "auth/invalid-verification-code": "The OTP is incorrect.",
-    "auth/code-expired": "The OTP has expired. Request another one.",
-    "auth/too-many-requests": "Too many attempts. Please try later.",
-    "auth/quota-exceeded": "Check the Firebase SMS quota and billing settings.",
-    "auth/captcha-check-failed": "reCAPTCHA verification failed. Refresh and try again.",
-    "auth/invalid-email": "Enter a valid email address.",
-    "auth/weak-password": "Password must contain at least 6 characters.",
-    "auth/email-already-in-use": "This email already has an account. Please log in.",
-    "auth/invalid-credential": "Email or password is incorrect.",
-    "auth/popup-blocked": "Your browser blocked the Google login popup.",
-    "auth/popup-closed-by-user": "The Google login window was closed.",
-    "auth/network-request-failed": "Check your internet connection.",
-    "permission-denied": "Firestore rules blocked this request. Check your database rules.",
-    "storage/unauthorized": "Storage rules do not allow this upload."
-  };
-  return messages[code] || error?.message || "Something went wrong.";
-}
-
-function ensureFirebase() {
-  if (authReady && auth && db && storage) return true;
-  errorText("authError", "Firebase is not configured.");
-  return false;
-}
-
-function hideAuthForms() {
-  ["startScreen", "phoneScreen", "otpScreen", "emailScreen"]
-    .forEach(id => $(id).classList.add("hidden"));
-}
-
-function showAuthScreen(id) {
-  hideAuthForms();
-  $(id).classList.remove("hidden");
-  errorText("authError");
-}
-
-function showMainScreen(name) {
-  $("authScreen").classList.toggle("hidden", name !== "auth");
-  $("setupScreen").classList.toggle("hidden", name !== "setup");
-  $("appScreen").classList.toggle("hidden", name !== "app");
-  $("logoutButton").classList.toggle("hidden", name === "auth");
-}
-
-function resetRecaptcha() {
-  if (recaptcha) {
-    try { recaptcha.clear(); } catch (_) {}
-    recaptcha = null;
-  }
-  $("recaptcha-container").replaceChildren();
-}
-
-/* Authentication navigation */
-$("showPhoneButton").onclick = () => showAuthScreen("phoneScreen");
-$("showEmailButton").onclick = () => showAuthScreen("emailScreen");
-$("phoneBackButton").onclick = () => showAuthScreen("startScreen");
-$("emailBackButton").onclick = () => showAuthScreen("startScreen");
-
-$("changeNumberButton").onclick = () => {
-  confirmation = null;
-  resetRecaptcha();
-  showAuthScreen("phoneScreen");
+$("googleButton").onclick = async () => {
+  try { await signInWithPopup(auth, new GoogleAuthProvider()); } catch(e) { errorText("authError", e.message); }
 };
 
-/* Phone OTP */
 $("sendOtpButton").onclick = async () => {
-  if (!ensureFirebase()) return;
-
-  const digits = $("mobileNumber").value.replace(/\D/g, "");
-  if (!/^[6-9]\d{9}$/.test(digits)) {
-    errorText("authError", "Enter a valid 10-digit Indian mobile number.");
-    return;
-  }
-
-  busy("sendOtpButton", true, "Sending OTP...");
-
+  const digits = $("mobileNumber").value.trim();
+  if(!/^[6-9]\d{9}$/.test(digits)) return errorText("authError", "Enter valid 10-digit number");
   try {
-    resetRecaptcha();
-
-    recaptcha = new RecaptchaVerifier(auth, "recaptcha-container", {
-      size: "normal"
-    });
-
-    await recaptcha.render();
-
-    confirmation = await signInWithPhoneNumber(
-      auth,
-      "+91" + digits,
-      recaptcha
-    );
-
-    $("otpMessage").textContent = "Enter the OTP sent to +91 " + digits + ".";
-    showAuthScreen("otpScreen");
-    $("otpInput").focus();
-  } catch (error) {
-    errorText("authError", firebaseError(error));
-    resetRecaptcha();
-  } finally {
-    busy("sendOtpButton", false);
-  }
+    if(recaptcha) recaptcha.clear();
+    recaptcha = new RecaptchaVerifier(auth, "recaptcha-container", { size: "normal" });
+    confirmation = await signInWithPhoneNumber(auth, "+91" + digits, recaptcha);
+    $("phoneScreen").classList.add("hidden");
+    $("otpScreen").classList.remove("hidden");
+  } catch(e) { errorText("authError", e.message); }
 };
 
 $("verifyButton").onclick = async () => {
-  if (!ensureFirebase()) return;
-
-  if (!confirmation) {
-    errorText("authError", "Request a new OTP first.");
-    return;
-  }
-
-  const code = $("otpInput").value.trim();
-  if (!/^\d{6}$/.test(code)) {
-    errorText("authError", "Enter the 6-digit OTP.");
-    return;
-  }
-
-  busy("verifyButton", true, "Verifying...");
-
-  try {
-    await confirmation.confirm(code);
-    confirmation = null;
-    errorText("authError");
-  } catch (error) {
-    errorText("authError", firebaseError(error));
-  } finally {
-    busy("verifyButton", false);
-  }
+  try { await confirmation.confirm($("otpInput").value.trim()); } catch(e) { errorText("authError", e.message); }
 };
 
-/* Email login */
 $("loginButton").onclick = async () => {
-  if (!ensureFirebase()) return;
-
-  const email = $("emailInput").value.trim();
-  const password = $("passwordInput").value;
-
-  if (!email || !password) {
-    errorText("authError", "Enter your email and password.");
-    return;
-  }
-
-  busy("loginButton", true, "Logging in...");
-
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    errorText("authError");
-  } catch (error) {
-    errorText("authError", firebaseError(error));
-  } finally {
-    busy("loginButton", false);
-  }
+  try { await signInWithEmailAndPassword(auth, $("emailInput").value, $("passwordInput").value); } catch(e) { errorText("authError", e.message); }
 };
 
 $("signupButton").onclick = async () => {
-  if (!ensureFirebase()) return;
-
-  const email = $("emailInput").value.trim();
-  const password = $("passwordInput").value;
-
-  if (!email) {
-    errorText("authError", "Enter your email address.");
-    return;
-  }
-
-  if (password.length < 6) {
-    errorText("authError", "Password must contain at least 6 characters.");
-    return;
-  }
-
-  busy("signupButton", true, "Creating account...");
-
-  try {
-    await createUserWithEmailAndPassword(auth, email, password);
-    errorText("authError");
-  } catch (error) {
-    errorText("authError", firebaseError(error));
-  } finally {
-    busy("signupButton", false);
-  }
+  try { await createUserWithEmailAndPassword(auth, $("emailInput").value, $("passwordInput").value); } catch(e) { errorText("authError", e.message); }
 };
 
-$("resetButton").onclick = async () => {
-  if (!ensureFirebase()) return;
-
-  const email = $("emailInput").value.trim();
-  if (!email) {
-    errorText("authError", "Enter your email address first.");
-    return;
-  }
-
-  try {
-    await sendPasswordResetEmail(auth, email);
-    errorText("authError", "If the account exists, reset instructions will be sent.");
-  } catch (error) {
-    errorText("authError", firebaseError(error));
-  }
-};
-
-/* Google login */
-$("googleButton").onclick = async () => {
-  if (!ensureFirebase()) return;
-
-  try {
-    const provider = new GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: "select_account" });
-    await signInWithPopup(auth, provider);
-  } catch (error) {
-    errorText("authError", firebaseError(error));
-  }
-};
-
-/* Username validation */
-$("username").oninput = event => {
-  event.target.value = event.target.value
-    .toLowerCase()
-    .replace(/^@/, "")
-    .replace(/[^a-z0-9_.]/g, "")
-    .slice(0, 24);
-};
-
-/* Profile setup/edit */
+/* Profile Save / Edit */
 $("createProfileButton").onclick = async () => {
-  if (!currentUser || !authReady) {
-    errorText("setupError", "Please log in first.");
-    return;
-  }
-
   const name = $("fullName").value.trim();
-  const username = $("username").value.trim().toLowerCase().replace(/^@/, "");
+  const username = $("username").value.trim().toLowerCase();
   const bio = $("bio").value.trim();
+  const dpFile = $("dpFileInput").files[0];
 
-  if (name.length < 2) {
-    errorText("setupError", "Enter a name containing at least 2 characters.");
-    return;
-  }
+  if(name.length < 2 || username.length < 3) return errorText("setupError", "Fill valid Name & Username.");
 
-  if (!/^[a-z0-9_.]{3,24}$/.test(username)) {
-    errorText("setupError", "Username must be 3–24 characters.");
-    return;
-  }
-
-  busy("createProfileButton", true, "Saving...");
-
+  let dpUrl = profile?.dpUrl || "";
   try {
+    if(dpFile) {
+      const storageRef = ref(storage, `dp/${currentUser.uid}_${Date.now()}`);
+      await uploadBytes(storageRef, dpFile);
+      dpUrl = await getDownloadURL(storageRef);
+    }
+
     const userRef = doc(db, "users", currentUser.uid);
-    const usernameRef = doc(db, "usernames", username);
-    const oldUsername = profile?.username || "";
+    await setDoc(userRef, {
+      uid: currentUser.uid,
+      name,
+      username,
+      bio,
+      dpUrl,
+      updatedAt: serverTimestamp()
+    }, { merge: true });
 
-    await runTransaction(db, async transaction => {
-      const usernameSnap = await transaction.get(usernameRef);
-      const userSnap = await transaction.get(userRef);
-
-      let oldRef = null;
-      let oldSnap = null;
-
-      if (oldUsername && oldUsername !== username) {
-        oldRef = doc(db, "usernames", oldUsername);
-        oldSnap = await transaction.get(oldRef);
-      }
-
-      if (usernameSnap.exists() && usernameSnap.data().uid !== currentUser.uid) {
-        throw new Error("USERNAME_TAKEN");
-      }
-
-      const oldData = userSnap.exists() ? userSnap.data() : {};
-
-      if (oldRef && oldSnap?.exists() && oldSnap.data().uid === currentUser.uid) {
-        transaction.delete(oldRef);
-      }
-
-      transaction.set(usernameRef, {
-        uid: currentUser.uid,
-        username
-      });
-
-      transaction.set(userRef, {
-        uid: currentUser.uid,
-        name,
-        username,
-        bio,
-        email: currentUser.email || oldData.email || "",
-        phoneNumber: currentUser.phoneNumber || oldData.phoneNumber || "",
-        createdAt: oldData.createdAt || serverTimestamp(),
-        updatedAt: serverTimestamp()
-      });
-    });
-
-    await updateProfile(currentUser, { displayName: name }).catch(() => {});
-
-    const saved = await getDoc(userRef);
-    profile = saved.data();
-    editingProfile = false;
-
-    $("setupTitle").textContent = "Create Your EyeBook ID";
-    $("createProfileButton").textContent = "Create My ID";
-    $("cancelEditButton").classList.add("hidden");
-
-    await openApp();
-  } catch (error) {
-    errorText(
-      "setupError",
-      error.message === "USERNAME_TAKEN"
-        ? "This username is already taken. Choose another."
-        : firebaseError(error)
-    );
-  } finally {
-    busy("createProfileButton", false);
-  }
-};
-
-$("cancelEditButton").onclick = async () => {
-  if (!profile) return;
-
-  editingProfile = false;
-  $("cancelEditButton").classList.add("hidden");
-  $("createProfileButton").textContent = "Create My ID";
-  await openApp();
+    profile = { name, username, bio, dpUrl };
+    loadUserProfile();
+    showScreen("app");
+  } catch(e) { errorText("setupError", e.message); }
 };
 
 $("editProfileButton").onclick = () => {
-  if (!profile || !currentUser) return;
-
-  editingProfile = true;
-  $("fullName").value = profile.name || "";
-  $("username").value = profile.username || "";
-  $("bio").value = profile.bio || "";
+  $("fullName").value = profile?.name || "";
+  $("username").value = profile?.username || "";
+  $("bio").value = profile?.bio || "";
   $("setupTitle").textContent = "Edit Your Profile";
-  $("createProfileButton").textContent = "Save Profile";
   $("cancelEditButton").classList.remove("hidden");
-  errorText("setupError");
-  showMainScreen("setup");
+  showScreen("setup");
 };
 
-async function openApp() {
-  if (!profile || !currentUser) return;
+$("cancelEditButton").onclick = () => showScreen("app");
 
-  $("profileName").textContent = profile.name || "EyeBook User";
-  $("profileUsername").textContent = profile.username ? "@" + profile.username : "";
-  $("profileBio").textContent = profile.bio || "";
-  $("profileEmail").textContent = profile.email ? "Email: " + profile.email : "";
-  $("profilePhone").textContent = profile.phoneNumber ? "Mobile: " + profile.phoneNumber : "";
-  $("profileAvatar").textContent = (profile.name || "E").charAt(0).toUpperCase();
-
-  showMainScreen("app");
-  openTab("homeTab");
-  startFeed();
-  startStories();
-}
-
-function openTab(tabId) {
-  ["homeTab", "storiesTab", "searchTab", "profileTab", "earningsTab"]
-    .forEach(id => $(id).classList.toggle("hidden", id !== tabId));
-
-  document.querySelectorAll(".nav button").forEach(button => {
-    button.classList.toggle("active", button.dataset.tab === tabId);
-  });
-}
-
-document.querySelectorAll(".nav button").forEach(button => {
-  button.onclick = () => openTab(button.dataset.tab);
+/* Tabs navigation */
+document.querySelectorAll(".nav button").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const tab = btn.dataset.tab;
+    ["homeTab", "messageTab", "profileTab"].forEach(t => {
+      $(t).classList.toggle("hidden", t !== tab);
+    });
+  };
 });
 
-function goHome() {
-  if (currentUser && profile) {
-    showMainScreen("app");
-    openTab("homeTab");
-  } else {
-    showMainScreen("auth");
-    showAuthScreen("startScreen");
-  }
-}
+/* Modals Control */
+$("triggerAddStory").onclick = () => $("storyModal").classList.remove("hidden");
+$("closeStoryModal").onclick = () => $("storyModal").classList.add("hidden");
 
-$("brandHome").onclick = goHome;
-$("brandHome").onkeydown = event => {
-  if (event.key === "Enter" || event.key === " ") goHome();
+$("openReelModalBtn").onclick = () => $("reelModal").classList.remove("hidden");
+$("closeReelModal").onclick = () => $("reelModal").classList.add("hidden");
+
+$("openSettingsBtn").onclick = () => $("settingsModal").classList.remove("hidden");
+$("closeSettingsModal").onclick = () => $("settingsModal").classList.add("hidden");
+
+/* Publish Story with filters/mention/song */
+$("publishStoryBtn").onclick = async () => {
+  const file = $("storyFile").files[0];
+  const mention = $("storyMention").value.trim();
+  const filter = $("storyFilter").value;
+  const song = $("storySong").value.trim();
+  const text = $("storyText").value.trim();
+
+  if(!file) return errorText("storyModalError", "Select story photo/video.");
+
+  try {
+    const sRef = ref(storage, `stories/${currentUser.uid}_${Date.now()}`);
+    await uploadBytes(sRef, file);
+    const mediaUrl = await getDownloadURL(sRef);
+
+    await addDoc(collection(db, "stories"), {
+      uid: currentUser.uid,
+      name: profile.name,
+      username: profile.username,
+      dpUrl: profile.dpUrl || "",
+      mediaUrl,
+      mediaType: file.type.startsWith("video/") ? "video" : "image",
+      mention,
+      filter,
+      song,
+      text,
+      views: [],
+      createdAt: serverTimestamp(),
+      expiresAt: Date.now() + 86400000
+    });
+
+    $("storyModal").classList.add("hidden");
+    $("storyFile").value = "";
+    $("storyMention").value = "";
+    $("storySong").value = "";
+    $("storyText").value = "";
+    alert("Story published successfully!");
+  } catch(e) { errorText("storyModalError", e.message); }
 };
 
-/* Create a post */
+/* Publish Reel / Video */
+$("publishReelBtn").onclick = async () => {
+  const file = $("reelFile").files[0];
+  const title = $("reelTitle").value.trim();
+  const overlayText = $("reelOverlayText").value.trim();
+
+  if(!file) return errorText("reelModalError", "Select video file.");
+
+  try {
+    const rRef = ref(storage, `reels/${currentUser.uid}_${Date.now()}`);
+    await uploadBytes(rRef, file);
+    const mediaUrl = await getDownloadURL(rRef);
+
+    await addDoc(collection(db, "posts"), {
+      uid: currentUser.uid,
+      name: profile.name,
+      username: profile.username,
+      dpUrl: profile.dpUrl || "",
+      text: title,
+      overlayText,
+      mediaUrl,
+      mediaType: "video",
+      isReel: true,
+      likes: [],
+      createdAt: serverTimestamp()
+    });
+
+    $("reelModal").classList.add("hidden");
+    $("reelFile").value = "";
+    $("reelTitle").value = "";
+    $("reelOverlayText").value = "";
+    alert("Reel published successfully!");
+  } catch(e) { errorText("reelModalError", e.message); }
+};
+
+/* Publish Normal Post */
 $("publishButton").onclick = async () => {
-  errorText("postError");
-
-  if (!currentUser || !profile || !authReady) {
-    errorText("postError", "Please log in before publishing.");
-    return;
-  }
-
   const text = $("postText").value.trim();
-  const file = $("postFile").files[0] || null;
-
-  if (!text && !file) {
-    errorText("postError", "Write something or select a photo/video.");
-    return;
-  }
-
-  if (file && file.size > 10 * 1024 * 1024) {
-    errorText("postError", "The file is larger than 10 MB.");
-    return;
-  }
-
-  if (file && !["image/", "video/"].some(type => file.type.startsWith(type))) {
-    errorText("postError", "Only images and videos are supported.");
-    return;
-  }
-
-  busy("publishButton", true, "Publishing...");
+  const file = $("postFile").files[0];
+  if(!text && !file) return errorText("postError", "Write text or attach media.");
 
   try {
     let mediaUrl = "";
     let mediaType = "";
-
-    if (file) {
-      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-      const path = "posts/" + currentUser.uid + "/" + Date.now() + "_" + safeName;
-      const fileRef = ref(storage, path);
-
-      await uploadBytes(fileRef, file, { contentType: file.type });
-      mediaUrl = await getDownloadURL(fileRef);
+    if(file) {
+      const pRef = ref(storage, `posts/${currentUser.uid}_${Date.now()}`);
+      await uploadBytes(pRef, file);
+      mediaUrl = await getDownloadURL(pRef);
       mediaType = file.type.startsWith("video/") ? "video" : "image";
     }
 
@@ -1038,411 +816,123 @@ $("publishButton").onclick = async () => {
       uid: currentUser.uid,
       name: profile.name,
       username: profile.username,
+      dpUrl: profile.dpUrl || "",
       text,
       mediaUrl,
       mediaType,
+      isReel: false,
       likes: [],
       createdAt: serverTimestamp()
     });
 
     $("postText").value = "";
     $("postFile").value = "";
-    errorText("postError", "Your post was published successfully.");
-    $("postError").classList.add("success");
-  } catch (error) {
-    errorText("postError", firebaseError(error));
-    $("postError").classList.remove("success");
-  } finally {
-    busy("publishButton", false);
-  }
+    errorText("postError", "Posted successfully!", "success");
+  } catch(e) { errorText("postError", e.message); }
 };
 
-/* Live post feed */
-function startFeed() {
-  if (feedUnsubscribe) feedUnsubscribe();
-
-  const postsQuery = query(
-    collection(db, "posts"),
-    orderBy("createdAt", "desc"),
-    limit(50)
-  );
-
-  feedUnsubscribe = onSnapshot(postsQuery, snapshot => {
+/* Realtime Feeds & Stories */
+function startFeeds() {
+  onSnapshot(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(30)), snap => {
     const feed = $("postFeed");
-    feed.replaceChildren();
+    feed.innerHTML = snap.empty ? "<p class='muted'>No posts or reels yet.</p>" : "";
+    snap.forEach(docSnap => {
+      const p = docSnap.data();
+      const pId = docSnap.id;
+      const isLiked = p.likes && p.likes.includes(currentUser.uid);
 
-    if (snapshot.empty) {
-      const p = document.createElement("p");
-      p.className = "muted";
-      p.textContent = "No posts yet. Be the first to share!";
-      feed.appendChild(p);
-      return;
-    }
+      const div = document.createElement("div");
+      div.className = "post";
+      div.innerHTML = `
+        <div class="post-head">
+          <img src="${p.dpUrl || 'https://via.placeholder.com/36'}" alt="DP">
+          <div><strong>${p.name}</strong> <span class="muted">@${p.username}</span></div>
+        </div>
+        ${p.text ? `<p>${p.text}</p>` : ""}
+        ${p.mediaUrl ? (p.mediaType === 'video' ? `<div style="position:relative;"><video src="${p.mediaUrl}" controls style="width:100%;border-radius:10px;"></video>${p.overlayText ? `<div style="position:absolute;bottom:15px;left:15px;background:rgba(0,0,0,0.6);padding:4px 8px;border-radius:4px;font-size:12px;">${p.overlayText}</div>`:''}</div>` : `<img src="${p.mediaUrl}" style="width:100%;border-radius:10px;">`) : ""}
+        <div class="post-actions">
+          <span class="like-btn" data-id="${pId}" style="color:${isLiked ? '#ff4757':'var(--bright)'}">${isLiked ? '❤️ Liked' : '🤍 Like'} (${p.likes ? p.likes.length : 0})</span>
+          <span>💬 Comment</span>
+          <span>↗️ Share</span>
+          <span>🔄 Repost</span>
+        </div>
+      `;
 
-    snapshot.forEach(item => {
-      const data = item.data();
-      const post = document.createElement("article");
-      post.className = "post";
-
-      const head = document.createElement("div");
-      head.className = "post-head";
-
-      const avatar = document.createElement("div");
-      avatar.className = "avatar";
-      avatar.textContent = (data.name || "E").charAt(0).toUpperCase();
-
-      const identity = document.createElement("div");
-      const name = document.createElement("strong");
-      name.textContent = data.name || "EyeBook User";
-
-      const username = document.createElement("div");
-      username.className = "muted";
-      username.textContent = data.username ? "@" + data.username : "";
-
-      identity.append(name, username);
-      head.append(avatar, identity);
-      post.appendChild(head);
-
-      if (data.text) {
-        const content = document.createElement("p");
-        content.className = "post-text";
-        content.textContent = data.text;
-        post.appendChild(content);
-      }
-
-      if (data.mediaUrl && data.mediaType === "image") {
-        const image = document.createElement("img");
-        image.className = "post-media";
-        image.src = data.mediaUrl;
-        image.alt = "Post image";
-        image.loading = "lazy";
-        post.appendChild(image);
-      } else if (data.mediaUrl && data.mediaType === "video") {
-        const video = document.createElement("video");
-        video.className = "post-media";
-        video.src = data.mediaUrl;
-        video.controls = true;
-        video.preload = "metadata";
-        post.appendChild(video);
-      }
-
-      const actions = document.createElement("div");
-      actions.className = "post-actions";
-
-      const likes = Array.isArray(data.likes) ? data.likes : [];
-      const likeButton = document.createElement("button");
-      likeButton.textContent =
-        (likes.includes(currentUser.uid) ? "❤️ Liked " : "🤍 Like ") +
-        "(" + likes.length + ")";
-
-      likeButton.onclick = async () => {
-        likeButton.disabled = true;
-
-        try {
-          await runTransaction(db, async transaction => {
-            const postRef = doc(db, "posts", item.id);
-            const latest = await transaction.get(postRef);
-            if (!latest.exists()) return;
-
-            const currentLikes = Array.isArray(latest.data().likes)
-              ? latest.data().likes
-              : [];
-
-            const nextLikes = currentLikes.includes(currentUser.uid)
-              ? currentLikes.filter(uid => uid !== currentUser.uid)
-              : [...currentLikes, currentUser.uid];
-
-            transaction.update(postRef, { likes: nextLikes });
-          });
-        } catch (error) {
-          alert(firebaseError(error));
-        } finally {
-          likeButton.disabled = false;
+      div.querySelector(".like-btn").onclick = async () => {
+        const postRef = doc(db, "posts", pId);
+        if(isLiked) {
+          await updateDoc(postRef, { likes: arrayRemove(currentUser.uid) });
+        } else {
+          await updateDoc(postRef, { likes: arrayUnion(currentUser.uid) });
         }
       };
 
-      actions.appendChild(likeButton);
-
-      if (data.uid === currentUser.uid) {
-        const deleteButton = document.createElement("button");
-        deleteButton.className = "btn-danger";
-        deleteButton.textContent = "Delete";
-
-        deleteButton.onclick = async () => {
-          if (!confirm("Delete this post?")) return;
-
-          try {
-            await deleteDoc(doc(db, "posts", item.id));
-          } catch (error) {
-            alert(firebaseError(error));
-          }
-        };
-
-        actions.appendChild(deleteButton);
-      }
-
-      post.appendChild(actions);
-      feed.appendChild(post);
+      feed.appendChild(div);
     });
-  }, error => {
-    $("postFeed").textContent = firebaseError(error);
   });
-}
 
-/* Stories */
-$("publishStoryButton").onclick = async () => {
-  errorText("storyError");
+  onSnapshot(query(collection(db, "stories"), orderBy("createdAt", "desc")), snap => {
+    const bar = $("storiesBar");
+    const addBtnHTML = bar.firstElementChild.outerHTML;
+    bar.innerHTML = addBtnHTML;
+    $("triggerAddStory").onclick = () => $("storyModal").classList.remove("hidden");
 
-  const text = $("storyText").value.trim();
-  if (!currentUser || !profile) {
-    errorText("storyError", "Please log in first.");
-    return;
-  }
-  if (!text) {
-    errorText("storyError", "Write a story first.");
-    return;
-  }
-
-  busy("publishStoryButton", true, "Sharing...");
-
-  try {
     const now = Date.now();
+    snap.forEach(docSnap => {
+      const s = docSnap.data();
+      if(s.expiresAt > now) {
+        const item = document.createElement("div");
+        item.className = "story-ring";
+        let filterStyle = "";
+        if(s.filter === 'grayscale') filterStyle = "filter: grayscale(100%);";
+        if(s.filter === 'sepia') filterStyle = "filter: sepia(100%);";
+        if(s.filter === 'bright') filterStyle = "filter: brightness(130%);";
 
-    await addDoc(collection(db, "stories"), {
-      uid: currentUser.uid,
-      name: profile.name,
-      username: profile.username,
-      text,
-      createdAt: serverTimestamp(),
-      expiresAt: now + 24 * 60 * 60 * 1000
+        item.innerHTML = `
+          <div class="story-avatar-wrap">
+            <div class="story-avatar-inner">
+              <img src="${s.dpUrl || 'https://via.placeholder.com/60'}" style="${filterStyle}" alt="Story">
+            </div>
+          </div>
+          <span class="story-username">${s.username}</span>
+        `;
+        item.onclick = () => {
+          let msg = `Story by @${s.username}\n${s.text ? 'Caption: '+s.text+'\n':''}${s.mention ? 'Mentioned: '+s.mention+'\n':''}${s.song ? 'Song: '+s.song:''}`;
+          alert(msg);
+        };
+        bar.appendChild(item);
+      }
     });
-
-    $("storyText").value = "";
-    errorText("storyError", "Story shared.");
-  } catch (error) {
-    errorText("storyError", firebaseError(error));
-  } finally {
-    busy("publishStoryButton", false);
-  }
-};
-
-function startStories() {
-  if (storiesUnsubscribe) storiesUnsubscribe();
-
-  const q = query(
-    collection(db, "stories"),
-    orderBy("createdAt", "desc"),
-    limit(50)
-  );
-
-  storiesUnsubscribe = onSnapshot(q, snapshot => {
-    const root = $("storyFeed");
-    root.replaceChildren();
-
-    const active = snapshot.docs.filter(item => {
-      const data = item.data();
-      return Number(data.expiresAt || 0) > Date.now();
-    });
-
-    if (!active.length) {
-      const p = document.createElement("p");
-      p.className = "muted";
-      p.textContent = "No active stories.";
-      root.appendChild(p);
-      return;
-    }
-
-    active.forEach(item => {
-      const data = item.data();
-      const card = document.createElement("div");
-      card.className = "user-result";
-
-      const title = document.createElement("strong");
-      title.textContent = data.name || "EyeBook User";
-
-      const content = document.createElement("p");
-      content.textContent = data.text || "";
-
-      card.append(title, content);
-      root.appendChild(card);
-    });
-  }, error => {
-    $("storyFeed").textContent = firebaseError(error);
   });
 }
 
-/* Search users */
-$("searchButton").onclick = async () => {
-  if (!currentUser || !authReady) return;
-
-  const term = $("searchInput").value.trim().toLowerCase();
-  const results = $("searchResults");
-  results.replaceChildren();
-
-  if (term.length < 2) {
-    results.textContent = "Enter at least 2 characters.";
-    return;
-  }
-
-  busy("searchButton", true, "Searching...");
-
-  try {
-    const snapshot = await getDocs(query(collection(db, "users"), limit(500)));
-
-    const matches = snapshot.docs.filter(item => {
-      const data = item.data();
-
-      return item.id !== currentUser.uid &&
-        (
-          (data.username || "").toLowerCase().includes(term) ||
-          (data.name || "").toLowerCase().includes(term)
-        );
-    });
-
-    if (!matches.length) {
-      results.textContent = "No users found.";
-      return;
-    }
-
-    matches.forEach(item => {
-      const data = item.data();
-      const row = document.createElement("div");
-      row.className = "user-result";
-
-      const name = document.createElement("strong");
-      name.textContent = data.name || "EyeBook User";
-
-      const username = document.createElement("p");
-      username.className = "muted";
-      username.textContent = data.username ? "@" + data.username : "";
-
-      row.append(name, username);
-      results.appendChild(row);
-    });
-  } catch (error) {
-    results.textContent = firebaseError(error);
-  } finally {
-    busy("searchButton", false);
-  }
-};
-
-/* Earnings and APK information */
-$("paymentInfoButton").onclick = () => {
-  $("paymentInfoText").textContent =
-    "Real earnings require an approved ad provider and verified reports.";
-};
-
-$("apkInfoButton").onclick = () => {
-  $("apkInfoText").textContent =
-    APK_DOWNLOAD_URL
-      ? "APK link configured."
-      : "No APK file is configured yet.";
-};
-
-if (APK_DOWNLOAD_URL) {
-  $("apkDownloadLink").href = APK_DOWNLOAD_URL;
-  $("apkDownloadLink").classList.remove("hidden");
+function loadUserProfile() {
+  $("profileName").textContent = profile.name;
+  $("profileUsername").textContent = "@" + profile.username;
+  $("profileBio").textContent = profile.bio || "";
+  
+  const dpHTML = profile.dpUrl ? `<img src="${profile.dpUrl}" style="width:100%;height:100%;object-fit:cover;">` : profile.name.charAt(0).toUpperCase();
+  $("profileAvatarDisplay").innerHTML = dpHTML;
+  $("myStoryAvatarContainer").innerHTML = dpHTML;
 }
 
-/* Input validation */
-$("mobileNumber").oninput = event => {
-  event.target.value = event.target.value.replace(/\D/g, "").slice(0, 10);
-};
+/* Auth State Listener */
+onAuthStateChanged(auth, async user => {
+  currentUser = user;
+  if(!user) return showScreen("auth");
 
-$("otpInput").oninput = event => {
-  event.target.value = event.target.value.replace(/\D/g, "").slice(0, 6);
-};
-
-$("searchInput").onkeydown = event => {
-  if (event.key === "Enter") $("searchButton").click();
-};
-
-$("logoutButton").onclick = async () => {
-  if (!authReady) return;
-
-  try {
-    await signOut(auth);
-  } catch (error) {
-    alert(firebaseError(error));
+  const docSnap = await getDoc(doc(db, "users", user.uid));
+  if(!docSnap.exists() || !docSnap.data().name || !docSnap.data().username) {
+    showScreen("setup");
+  } else {
+    profile = docSnap.data();
+    loadUserProfile();
+    showScreen("app");
+    startFeeds();
   }
-};
+});
 
-/* Firebase initialization */
-try {
-  const app = initializeApp(firebaseConfig);
-
-  auth = getAuth(app);
-  db = getFirestore(app);
-  storage = getStorage(app);
-  authReady = true;
-
-  onAuthStateChanged(auth, async user => {
-    const operation = ++authOperation;
-    currentUser = user;
-
-    if (!user) {
-      profile = null;
-
-      if (feedUnsubscribe) {
-        feedUnsubscribe();
-        feedUnsubscribe = null;
-      }
-
-      if (storiesUnsubscribe) {
-        storiesUnsubscribe();
-        storiesUnsubscribe = null;
-      }
-
-      showMainScreen("auth");
-      showAuthScreen("startScreen");
-      return;
-    }
-
-    try {
-      const snapshot = await getDoc(doc(db, "users", user.uid));
-
-      if (operation !== authOperation) return;
-
-      if (
-        !snapshot.exists() ||
-        !snapshot.data().name ||
-        !snapshot.data().username
-      ) {
-        profile = null;
-
-        $("setupTitle").textContent = "Create Your EyeBook ID";
-        $("createProfileButton").textContent = "Create My ID";
-        $("cancelEditButton").classList.add("hidden");
-
-        $("fullName").value =
-          user.displayName || user.email?.split("@")[0] || "";
-
-        $("username").value = "";
-        $("bio").value = "";
-
-        errorText("setupError");
-        showMainScreen("setup");
-        return;
-      }
-
-      profile = snapshot.data();
-      await openApp();
-    } catch (error) {
-      if (operation !== authOperation) return;
-
-      showMainScreen("auth");
-      errorText(
-        "authError",
-        "Unable to load your profile: " + firebaseError(error)
-      );
-    }
-  });
-} catch (error) {
-  console.error("EyeBook Firebase initialization error:", error);
-
-  showMainScreen("auth");
-  errorText("authError", firebaseError(error));
-}
+$("logoutButton").onclick = () => signOut(auth);
 </script>
 </body>
 </html>
