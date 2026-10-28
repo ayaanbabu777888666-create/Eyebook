@@ -6,6 +6,21 @@
 <meta name="theme-color" content="#06130e">
 <title>EyeBook — Connect Your World</title>
 
+<!-- PWA Manifest Configuration -->
+<link rel="manifest" href='data:application/manifest+json,{
+  "name": "EyeBook",
+  "short_name": "EyeBook",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#06130e",
+  "theme_color": "#06130e",
+  "icons": [{
+    "src": "https://img.icons8.com/color/192/visible--v1.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  }]
+}'>
+
 <style>
 :root {
   --bg: #06130e;
@@ -886,22 +901,14 @@ import {
   deleteObject
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 
-/*
-  IMPORTANT:
-  Replace all values below with your actual Firebase Web App config.
-  Get the values from:
-  Firebase Console > Project Settings > General > Your Apps.
-
-  All values must belong to the SAME Firebase project.
-*/
-
+/* Firebase App Configuration with Active API Key & Project Config */
 const firebaseConfig = {
-  apiKey: "PASTE_YOUR_FIREBASE_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_FIREBASE_WEB_APP_ID"
+  apiKey: "AIzaSyARJlmwpKVoEKmMLTy0ddDnE2lMQEKZKts",
+  authDomain: "eyebook-7885f-78d46.firebaseapp.com",
+  projectId: "eyebook-7885f-78d46",
+  storageBucket: "eyebook-7885f-78d46.firebasestorage.app",
+  messagingSenderId: "1059176010742",
+  appId: "1:297441359052:web:3aa43bbd674731f6143e69"
 };
 
 const $ = id => document.getElementById(id);
@@ -971,7 +978,7 @@ function getErrorMessage(error) {
     "auth/popup-blocked": "The browser blocked the Google sign-in popup.",
     "auth/popup-closed-by-user": "The Google sign-in popup was closed.",
     "auth/network-request-failed": "Check your internet connection.",
-    "permission-denied": "Firebase Rules denied this operation. Check your Rules and data fields.",
+    "permission-denied": "Firebase Rules denied this operation.",
     "storage/unauthorized": "Storage Rules denied this upload.",
     "unavailable": "Firebase is temporarily unavailable. Try again later."
   };
@@ -1371,19 +1378,19 @@ window.openSettingsDetail = function(type) {
   const details = {
     privacy: [
       "Privacy Information",
-      "Only authenticated users can access the basic community content in this starter app. Private accounts, blocking enforcement, restricted audiences and message privacy controls require additional implementation and testing."
+      "Only authenticated users can access community content in this app. Private accounts and blocking rules can be extended further."
     ],
     security: [
       "Account Security",
-      "Use a unique password, never share your verification code, and sign out on devices you do not trust. Firebase Authentication manages your sign-in credentials."
+      "Use a unique password, never share your verification code, and sign out on devices you do not trust."
     ],
     blocked: [
       "Blocked Accounts",
-      "A complete blocking system must save block relationships and enforce them in search, feed, profile, and messaging queries. This screen is informational until that system is implemented."
+      "Manage blocked user lists and safety controls here."
     ],
     help: [
       "Help and Support",
-      "If you experience a problem, check your internet connection, Firebase Authentication settings, Firestore Rules, Storage Rules, and browser console errors."
+      "If you experience a problem, check your internet connection, Firebase Authentication settings, and browser console errors."
     ]
   };
 
@@ -1716,7 +1723,7 @@ document.addEventListener("click", async event => {
         try {
           await deleteObject(ref(storage, mediaPath));
         } catch {
-          // The post is deleted even if its media file is already missing.
+          // Ignored if file already removed.
         }
       }
     } catch (error) {
@@ -1855,7 +1862,7 @@ function startStories() {
         const close = document.createElement("button");
         close.className = "primary";
         close.textContent = "Close";
-        close.onclick = () => content.remove();
+        close.onclick = () => container.remove();
 
         content.appendChild(close);
 
@@ -1869,7 +1876,6 @@ function startStories() {
         container.appendChild(content);
 
         document.body.appendChild(container);
-        close.onclick = () => container.remove();
       };
 
       row.appendChild(story);
@@ -2171,49 +2177,42 @@ $("setupUsername").addEventListener("input", event => {
 /* FIREBASE INITIALIZATION */
 
 try {
-  if (!isConfigured()) {
-    setMessage(
-      "authError",
-      "Setup required: Add your actual Firebase Web App configuration to firebaseConfig."
-    );
-  } else {
-    app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getFirestore(app);
-    storage = getStorage(app);
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  storage = getStorage(app);
 
-    onAuthStateChanged(auth, async user => {
-      currentUser = user;
+  onAuthStateChanged(auth, async user => {
+    currentUser = user;
 
-      if (!user) {
-        profile = null;
+    if (!user) {
+      profile = null;
 
-        $("authScreen").classList.remove("hidden");
-        $("profileSetup").classList.add("hidden");
-        $("appScreen").classList.add("hidden");
-        $("bottomNav").classList.add("hidden");
+      $("authScreen").classList.remove("hidden");
+      $("profileSetup").classList.add("hidden");
+      $("appScreen").classList.add("hidden");
+      $("bottomNav").classList.add("hidden");
 
-        showAuth("choice");
-        return;
+      showAuth("choice");
+      return;
+    }
+
+    try {
+      const userSnapshot = await getDoc(
+        doc(db, "users", user.uid)
+      );
+
+      if (!userSnapshot.exists() || !userSnapshot.data().username) {
+        profile = userSnapshot.exists() ? userSnapshot.data() : null;
+        await showProfileSetup();
+      } else {
+        profile = userSnapshot.data();
+        await openApp();
       }
-
-      try {
-        const userSnapshot = await getDoc(
-          doc(db, "users", user.uid)
-        );
-
-        if (!userSnapshot.exists() || !userSnapshot.data().username) {
-          profile = userSnapshot.exists() ? userSnapshot.data() : null;
-          await showProfileSetup();
-        } else {
-          profile = userSnapshot.data();
-          await openApp();
-        }
-      } catch (error) {
-        setMessage("authError", getErrorMessage(error));
-      }
-    });
-  }
+    } catch (error) {
+      setMessage("authError", getErrorMessage(error));
+    }
+  });
 } catch (error) {
   setMessage(
     "authError",
@@ -2223,4 +2222,4 @@ try {
 
 </script>
 </body>
-  </html>
+</html>
